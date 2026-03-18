@@ -28,15 +28,18 @@ export default function ProductDetailScreen({ navigation, route }) {
 
   const images = product.images || [product.image];
 
-  const handleQtyChange = delta => {
-    setQty(prev => Math.max(product.minOrder, prev + delta));
+  const handleQtyChange = (delta) => {
+    setQty((prev) => Math.max(product.minOrder, prev + delta));
   };
 
   const handleAddToPurchaseOrder = () => {
     addToPurchaseOrder(product, qty);
     Alert.alert('成功', `已将 ${product.name} x${qty} 加入采购单`, [
       { text: '继续浏览', style: 'cancel' },
-      { text: '查看采购单', onPress: () => navigation.navigate('PurchaseOrders') },
+      {
+        text: '查看采购单',
+        onPress: () => navigation.navigate('PurchaseOrders'),
+      },
     ]);
   };
 
@@ -51,7 +54,9 @@ export default function ProductDetailScreen({ navigation, route }) {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backIcon}>‹</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>{product.name}</Text>
+        <Text style={styles.headerTitle} numberOfLines={1}>
+          {product.name}
+        </Text>
         <TouchableOpacity style={styles.shareBtn}>
           <Text style={styles.shareIcon}>⋯</Text>
         </TouchableOpacity>
@@ -66,7 +71,7 @@ export default function ProductDetailScreen({ navigation, route }) {
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             keyExtractor={(_, i) => String(i)}
-            onMomentumScrollEnd={e => {
+            onMomentumScrollEnd={(e) => {
               setActiveImage(Math.round(e.nativeEvent.contentOffset.x / SCREEN_WIDTH));
             }}
             renderItem={({ item }) => (
@@ -84,7 +89,7 @@ export default function ProductDetailScreen({ navigation, route }) {
         <View style={styles.priceCard}>
           <View style={styles.priceRow}>
             <Text style={styles.price}>{formatPrice(product.price, product.unit)}</Text>
-            {product.tags?.map(tag => (
+            {product.tags?.map((tag) => (
               <View key={tag} style={styles.tag}>
                 <Text style={styles.tagText}>{tag}</Text>
               </View>
@@ -93,11 +98,20 @@ export default function ProductDetailScreen({ navigation, route }) {
           <Text style={styles.productName}>{product.name}</Text>
           <View style={styles.metaRow}>
             <Text style={styles.metaItem}>品牌：{product.brand}</Text>
-            <Text style={styles.metaItem}>起订：{product.minOrder}{product.unit}</Text>
-            <Text style={styles.metaItem}>库存：{product.stock}{product.unit}</Text>
+            <Text style={styles.metaItem}>
+              起订：{product.minOrder}
+              {product.unit}
+            </Text>
+            <Text style={styles.metaItem}>
+              库存：{product.stock}
+              {product.unit}
+            </Text>
           </View>
           <View style={styles.metaRow}>
-            <Text style={styles.metaItem}>销量：{product.sales}{product.unit}</Text>
+            <Text style={styles.metaItem}>
+              销量：{product.sales}
+              {product.unit}
+            </Text>
             <Text style={styles.metaItem}>评分：⭐ {product.rating}</Text>
           </View>
         </View>
@@ -128,9 +142,11 @@ export default function ProductDetailScreen({ navigation, route }) {
             <TextInput
               style={styles.qtyInput}
               value={String(qty)}
-              onChangeText={v => {
+              onChangeText={(v) => {
                 const n = parseInt(v, 10);
-                if (!isNaN(n)) setQty(Math.max(product.minOrder, n));
+                if (!isNaN(n)) {
+                  setQty(Math.max(product.minOrder, n));
+                }
               }}
               keyboardType="numeric"
               textAlign="center"
@@ -141,12 +157,17 @@ export default function ProductDetailScreen({ navigation, route }) {
             <Text style={styles.qtyUnit}>{product.unit}</Text>
             <Text style={styles.qtyTotal}>合计：{formatPriceFull(product.price * qty)}</Text>
           </View>
-          <Text style={styles.minOrderHint}>最低起订量 {product.minOrder} {product.unit}</Text>
+          <Text style={styles.minOrderHint}>
+            最低起订量 {product.minOrder} {product.unit}
+          </Text>
         </View>
 
         {/* Tabs */}
         <View style={styles.tabs}>
-          {[{ key: 'desc', label: '商品详情' }, { key: 'specs', label: '规格参数' }].map(tab => (
+          {[
+            { key: 'desc', label: '商品详情' },
+            { key: 'specs', label: '规格参数' },
+          ].map((tab) => (
             <TouchableOpacity
               key={tab.key}
               style={[styles.tab, activeTab === tab.key && styles.tabActive]}
@@ -203,24 +224,61 @@ const styles = StyleSheet.create({
   },
   backBtn: { width: 36 },
   backIcon: { fontSize: 28, color: COLORS.textPrimary },
-  headerTitle: { flex: 1, fontSize: FONT_SIZES.md, fontWeight: '600', color: COLORS.textPrimary },
+  headerTitle: {
+    flex: 1,
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+  },
   shareBtn: { width: 36, alignItems: 'flex-end' },
   shareIcon: { fontSize: 22, color: COLORS.textSecondary },
-  imageContainer: { width: SCREEN_WIDTH, height: 280, backgroundColor: COLORS.lightGray },
+  imageContainer: {
+    width: SCREEN_WIDTH,
+    height: 280,
+    backgroundColor: COLORS.lightGray,
+  },
   mainImage: { width: SCREEN_WIDTH, height: 280 },
-  dots: { position: 'absolute', bottom: 10, left: 0, right: 0, flexDirection: 'row', justifyContent: 'center', gap: 4 },
-  dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.5)' },
+  dots: {
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 4,
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+  },
   dotActive: { backgroundColor: COLORS.white, width: 14 },
   priceCard: {
     backgroundColor: COLORS.white,
     padding: SPACING.md,
     marginBottom: SPACING.xs,
   },
-  priceRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, marginBottom: SPACING.sm },
+  priceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
+    marginBottom: SPACING.sm,
+  },
   price: { fontSize: FONT_SIZES.xxl, color: COLORS.danger, fontWeight: 'bold' },
-  tag: { backgroundColor: '#FFF1F0', borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  tag: {
+    backgroundColor: '#FFF1F0',
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
   tagText: { fontSize: FONT_SIZES.xs, color: COLORS.danger },
-  productName: { fontSize: FONT_SIZES.lg, color: COLORS.textPrimary, fontWeight: '600', marginBottom: SPACING.sm },
+  productName: {
+    fontSize: FONT_SIZES.lg,
+    color: COLORS.textPrimary,
+    fontWeight: '600',
+    marginBottom: SPACING.sm,
+  },
   metaRow: { flexDirection: 'row', gap: SPACING.lg, marginBottom: SPACING.xs },
   metaItem: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
   supplierCard: {
@@ -233,11 +291,28 @@ const styles = StyleSheet.create({
   },
   supplierLeft: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   supplierIcon: { fontSize: 24 },
-  supplierName: { fontSize: FONT_SIZES.md, fontWeight: '600', color: COLORS.textPrimary },
-  supplierRegion: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary, marginTop: 2 },
+  supplierName: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+  },
+  supplierRegion: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+    marginTop: 2,
+  },
   supplierArrow: { fontSize: 22, color: COLORS.textHint },
-  qtyCard: { backgroundColor: COLORS.white, padding: SPACING.md, marginBottom: SPACING.xs },
-  qtyLabel: { fontSize: FONT_SIZES.md, fontWeight: '600', color: COLORS.textPrimary, marginBottom: SPACING.sm },
+  qtyCard: {
+    backgroundColor: COLORS.white,
+    padding: SPACING.md,
+    marginBottom: SPACING.xs,
+  },
+  qtyLabel: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+    marginBottom: SPACING.sm,
+  },
   qtyRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   qtyBtn: {
     width: 36,
@@ -260,8 +335,18 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
   },
   qtyUnit: { fontSize: FONT_SIZES.md, color: COLORS.textSecondary },
-  qtyTotal: { flex: 1, fontSize: FONT_SIZES.md, color: COLORS.danger, fontWeight: 'bold', textAlign: 'right' },
-  minOrderHint: { fontSize: FONT_SIZES.xs, color: COLORS.textHint, marginTop: SPACING.xs },
+  qtyTotal: {
+    flex: 1,
+    fontSize: FONT_SIZES.md,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+    textAlign: 'right',
+  },
+  minOrderHint: {
+    fontSize: FONT_SIZES.xs,
+    color: COLORS.textHint,
+    marginTop: SPACING.xs,
+  },
   tabs: {
     flexDirection: 'row',
     backgroundColor: COLORS.white,
@@ -280,11 +365,24 @@ const styles = StyleSheet.create({
   tabText: { fontSize: FONT_SIZES.md, color: COLORS.textSecondary },
   tabTextActive: { color: COLORS.primary, fontWeight: '600' },
   descCard: { backgroundColor: COLORS.white, padding: SPACING.md },
-  descText: { fontSize: FONT_SIZES.md, color: COLORS.textSecondary, lineHeight: 24 },
+  descText: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textSecondary,
+    lineHeight: 24,
+  },
   specsCard: { backgroundColor: COLORS.white },
-  specRow: { flexDirection: 'row', padding: SPACING.md, borderBottomWidth: 1, borderBottomColor: COLORS.border },
+  specRow: {
+    flexDirection: 'row',
+    padding: SPACING.md,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
   specRowEven: { backgroundColor: COLORS.lightGray },
-  specLabel: { width: 120, fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
+  specLabel: {
+    width: 120,
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+  },
   specValue: { flex: 1, fontSize: FONT_SIZES.sm, color: COLORS.textPrimary },
   actionBar: {
     flexDirection: 'row',
@@ -303,7 +401,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  chatBtnText: { fontSize: FONT_SIZES.md, color: COLORS.primary, fontWeight: '600' },
+  chatBtnText: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.primary,
+    fontWeight: '600',
+  },
   addBtn: {
     flex: 2,
     height: 46,
@@ -312,5 +414,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  addBtnText: { fontSize: FONT_SIZES.md, color: COLORS.white, fontWeight: 'bold' },
+  addBtnText: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.white,
+    fontWeight: 'bold',
+  },
 });

@@ -9,7 +9,14 @@ import {
   Alert,
 } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING } from '../../utils/constants';
-import { formatPriceFull, formatPrice, getStatusColor, getStatusLabel, getPaymentStatusLabel, getPaymentMethodLabel } from '../../utils/helpers';
+import {
+  formatPriceFull,
+  formatPrice,
+  getStatusColor,
+  getStatusLabel,
+  getPaymentStatusLabel,
+  getPaymentMethodLabel,
+} from '../../utils/helpers';
 import { useAppContext } from '../../context/AppContext';
 
 export default function PurchaseOrderDetailScreen({ navigation, route }) {
@@ -104,7 +111,9 @@ export default function PurchaseOrderDetailScreen({ navigation, route }) {
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <View style={styles.itemMeta}>
-                  <Text style={styles.itemQty}>× {item.qty} {item.unit}</Text>
+                  <Text style={styles.itemQty}>
+                    × {item.qty} {item.unit}
+                  </Text>
                   <Text style={styles.itemPrice}>{formatPrice(item.price, item.unit)}</Text>
                 </View>
               </View>
@@ -126,8 +135,14 @@ export default function PurchaseOrderDetailScreen({ navigation, route }) {
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>支付状态</Text>
-            <Text style={[styles.infoValue,
-              { color: order.paymentStatus === 'paid' ? COLORS.success : COLORS.warning }]}>
+            <Text
+              style={[
+                styles.infoValue,
+                {
+                  color: order.paymentStatus === 'paid' ? COLORS.success : COLORS.warning,
+                },
+              ]}
+            >
               {getPaymentStatusLabel(order.paymentStatus)}
             </Text>
           </View>
@@ -177,15 +192,29 @@ const styles = StyleSheet.create({
   },
   backBtn: { width: 36 },
   backIcon: { fontSize: 28, color: COLORS.textPrimary },
-  headerTitle: { flex: 1, fontSize: FONT_SIZES.lg, fontWeight: 'bold', color: COLORS.textPrimary, textAlign: 'center' },
+  headerTitle: {
+    flex: 1,
+    fontSize: FONT_SIZES.lg,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    textAlign: 'center',
+  },
   errorText: { textAlign: 'center', marginTop: 40, color: COLORS.textHint },
   statusBanner: {
     padding: SPACING.lg,
     alignItems: 'center',
     marginBottom: SPACING.xs,
   },
-  statusLabel: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.white },
-  orderId: { fontSize: FONT_SIZES.sm, color: 'rgba(255,255,255,0.85)', marginTop: 4 },
+  statusLabel: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.white,
+  },
+  orderId: {
+    fontSize: FONT_SIZES.sm,
+    color: 'rgba(255,255,255,0.85)',
+    marginTop: 4,
+  },
   card: {
     backgroundColor: COLORS.white,
     margin: SPACING.xs,
@@ -198,9 +227,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
-  cardTitle: { fontSize: FONT_SIZES.md, fontWeight: 'bold', color: COLORS.textPrimary, marginBottom: SPACING.md, borderLeftWidth: 3, borderLeftColor: COLORS.primary, paddingLeft: SPACING.sm },
+  cardTitle: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    marginBottom: SPACING.md,
+    borderLeftWidth: 3,
+    borderLeftColor: COLORS.primary,
+    paddingLeft: SPACING.sm,
+  },
   infoRow: { flexDirection: 'row', marginBottom: SPACING.sm },
-  infoLabel: { width: 80, fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
+  infoLabel: {
+    width: 80,
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+  },
   infoValue: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary },
   itemRow: {
     flexDirection: 'row',
@@ -209,13 +250,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  itemDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: COLORS.primary, marginTop: 6, marginRight: SPACING.sm },
+  itemDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: COLORS.primary,
+    marginTop: 6,
+    marginRight: SPACING.sm,
+  },
   itemInfo: { flex: 1 },
-  itemName: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary, fontWeight: '500' },
+  itemName: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textPrimary,
+    fontWeight: '500',
+  },
   itemMeta: { flexDirection: 'row', gap: SPACING.md, marginTop: 4 },
   itemQty: { fontSize: FONT_SIZES.xs, color: COLORS.textSecondary },
   itemPrice: { fontSize: FONT_SIZES.xs, color: COLORS.textHint },
-  itemSubtotal: { fontSize: FONT_SIZES.md, color: COLORS.danger, fontWeight: 'bold' },
+  itemSubtotal: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -223,9 +279,21 @@ const styles = StyleSheet.create({
     paddingTop: SPACING.md,
     marginTop: SPACING.xs,
   },
-  totalLabel: { fontSize: FONT_SIZES.md, fontWeight: '600', color: COLORS.textPrimary },
-  totalAmount: { fontSize: FONT_SIZES.xl, color: COLORS.danger, fontWeight: 'bold' },
-  noteText: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary, lineHeight: 22 },
+  totalLabel: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+  },
+  totalAmount: {
+    fontSize: FONT_SIZES.xl,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
+  noteText: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+    lineHeight: 22,
+  },
   actionBar: {
     flexDirection: 'row',
     backgroundColor: COLORS.white,
@@ -243,7 +311,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cancelBtnText: { color: COLORS.danger, fontSize: FONT_SIZES.sm, fontWeight: '600' },
+  cancelBtnText: {
+    color: COLORS.danger,
+    fontSize: FONT_SIZES.sm,
+    fontWeight: '600',
+  },
   payBtn: {
     flex: 1,
     height: 44,
@@ -254,7 +326,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFBE6',
   },
-  payBtnText: { color: COLORS.warning, fontSize: FONT_SIZES.sm, fontWeight: '600' },
+  payBtnText: {
+    color: COLORS.warning,
+    fontSize: FONT_SIZES.sm,
+    fontWeight: '600',
+  },
   confirmBtn: {
     flex: 1,
     height: 44,
@@ -263,5 +339,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  confirmBtnText: { color: COLORS.white, fontSize: FONT_SIZES.sm, fontWeight: 'bold' },
+  confirmBtnText: {
+    color: COLORS.white,
+    fontSize: FONT_SIZES.sm,
+    fontWeight: 'bold',
+  },
 });

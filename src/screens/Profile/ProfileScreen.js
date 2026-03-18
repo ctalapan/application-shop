@@ -14,10 +14,25 @@ import { useAppContext } from '../../context/AppContext';
 
 const MENU_ITEMS = [
   { id: 'account', icon: '👤', label: '账号信息', desc: '查看和修改账号信息' },
-  { id: 'company', icon: '🏢', label: '企业信息', desc: '营业执照、税号等信息' },
+  {
+    id: 'company',
+    icon: '🏢',
+    label: '企业信息',
+    desc: '营业执照、税号等信息',
+  },
   { id: 'address', icon: '📍', label: '地址管理', desc: '收货地址管理' },
-  { id: 'invoice', icon: '🧾', label: '发票管理', desc: '发票抬头、增值税发票' },
-  { id: 'orders_stats', icon: '📊', label: '采购统计', desc: '采购金额、商品统计' },
+  {
+    id: 'invoice',
+    icon: '🧾',
+    label: '发票管理',
+    desc: '发票抬头、增值税发票',
+  },
+  {
+    id: 'orders_stats',
+    icon: '📊',
+    label: '采购统计',
+    desc: '采购金额、商品统计',
+  },
   { id: 'settings', icon: '⚙️', label: '设置', desc: '通知、隐私、语言设置' },
   { id: 'help', icon: '❓', label: '帮助中心', desc: '常见问题解答' },
   { id: 'about', icon: 'ℹ️', label: '关于我们', desc: '版本信息、联系方式' },
@@ -27,21 +42,25 @@ export default function ProfileScreen({ navigation }) {
   const { state } = useAppContext();
   const user = state.user;
 
-  const completedOrders = state.orders.filter(o => o.status === 'completed').length;
-  const pendingOrders = state.orders.filter(o => o.status === 'pending').length;
-  const processingOrders = state.orders.filter(o => o.status === 'processing').length;
+  const completedOrders = state.orders.filter((o) => o.status === 'completed').length;
+  const pendingOrders = state.orders.filter((o) => o.status === 'pending').length;
+  const processingOrders = state.orders.filter((o) => o.status === 'processing').length;
   const totalSpend = state.orders
-    .filter(o => o.status === 'completed')
+    .filter((o) => o.status === 'completed')
     .reduce((s, o) => s + o.totalAmount, 0);
 
-  const handleMenuPress = item => {
+  const handleMenuPress = (item) => {
     Alert.alert(item.label, `${item.desc}\n（功能开发中）`);
   };
 
   const handleLogout = () => {
     Alert.alert('退出登录', '确定要退出登录吗？', [
       { text: '取消', style: 'cancel' },
-      { text: '退出', style: 'destructive', onPress: () => Alert.alert('提示', '已退出登录') },
+      {
+        text: '退出',
+        style: 'destructive',
+        onPress: () => Alert.alert('提示', '已退出登录'),
+      },
     ]);
   };
 
@@ -75,26 +94,17 @@ export default function ProfileScreen({ navigation }) {
 
         {/* Stats */}
         <View style={styles.statsCard}>
-          <TouchableOpacity
-            style={styles.statItem}
-            onPress={() => navigation.navigate('Orders')}
-          >
+          <TouchableOpacity style={styles.statItem} onPress={() => navigation.navigate('Orders')}>
             <Text style={styles.statValue}>{pendingOrders}</Text>
             <Text style={styles.statLabel}>待确认</Text>
           </TouchableOpacity>
           <View style={styles.statDivider} />
-          <TouchableOpacity
-            style={styles.statItem}
-            onPress={() => navigation.navigate('Orders')}
-          >
+          <TouchableOpacity style={styles.statItem} onPress={() => navigation.navigate('Orders')}>
             <Text style={styles.statValue}>{processingOrders}</Text>
             <Text style={styles.statLabel}>处理中</Text>
           </TouchableOpacity>
           <View style={styles.statDivider} />
-          <TouchableOpacity
-            style={styles.statItem}
-            onPress={() => navigation.navigate('Orders')}
-          >
+          <TouchableOpacity style={styles.statItem} onPress={() => navigation.navigate('Orders')}>
             <Text style={styles.statValue}>{completedOrders}</Text>
             <Text style={styles.statLabel}>已完成</Text>
           </TouchableOpacity>
@@ -112,13 +122,37 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.sectionTitle}>快捷功能</Text>
           <View style={styles.quickGrid}>
             {[
-              { icon: '🛒', label: '采购单', action: () => navigation.navigate('PurchaseOrders') },
-              { icon: '📋', label: '我的订单', action: () => navigation.navigate('Orders') },
-              { icon: '💬', label: '消息中心', action: () => navigation.navigate('Chat') },
-              { icon: '⭐', label: '收藏商品', action: () => Alert.alert('提示', '功能开发中') },
-              { icon: '🔔', label: '消息通知', action: () => Alert.alert('提示', '功能开发中') },
-              { icon: '🎁', label: '优惠活动', action: () => Alert.alert('提示', '功能开发中') },
-            ].map(item => (
+              {
+                icon: '🛒',
+                label: '采购单',
+                action: () => navigation.navigate('PurchaseOrders'),
+              },
+              {
+                icon: '📋',
+                label: '我的订单',
+                action: () => navigation.navigate('Orders'),
+              },
+              {
+                icon: '💬',
+                label: '消息中心',
+                action: () => navigation.navigate('Chat'),
+              },
+              {
+                icon: '⭐',
+                label: '收藏商品',
+                action: () => Alert.alert('提示', '功能开发中'),
+              },
+              {
+                icon: '🔔',
+                label: '消息通知',
+                action: () => Alert.alert('提示', '功能开发中'),
+              },
+              {
+                icon: '🎁',
+                label: '优惠活动',
+                action: () => Alert.alert('提示', '功能开发中'),
+              },
+            ].map((item) => (
               <TouchableOpacity key={item.label} style={styles.quickItem} onPress={item.action}>
                 <Text style={styles.quickIcon}>{item.icon}</Text>
                 <Text style={styles.quickLabel}>{item.label}</Text>
@@ -171,7 +205,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  headerTitle: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.textPrimary },
+  headerTitle: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+  },
   scanIcon: { fontSize: 22, color: COLORS.textSecondary },
   userCard: {
     flexDirection: 'row',
@@ -188,11 +226,29 @@ const styles = StyleSheet.create({
     marginRight: SPACING.md,
   },
   userInfo: { flex: 1 },
-  nameRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, marginBottom: 4 },
-  userName: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.textPrimary },
-  memberBadge: { backgroundColor: '#FFF8E1', borderRadius: 10, paddingHorizontal: 8, paddingVertical: 2 },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
+    marginBottom: 4,
+  },
+  userName: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+  },
+  memberBadge: {
+    backgroundColor: '#FFF8E1',
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
   memberText: { fontSize: FONT_SIZES.xs, color: '#F59E0B', fontWeight: '600' },
-  company: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary, marginBottom: 2 },
+  company: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+    marginBottom: 2,
+  },
   role: { fontSize: FONT_SIZES.xs, color: COLORS.textHint },
   editIcon: { fontSize: 20, padding: SPACING.xs },
   statsCard: {
@@ -202,15 +258,28 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xs,
   },
   statItem: { flex: 1, alignItems: 'center' },
-  statValue: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.primary },
-  statLabel: { fontSize: FONT_SIZES.xs, color: COLORS.textSecondary, marginTop: 4 },
+  statValue: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.primary,
+  },
+  statLabel: {
+    fontSize: FONT_SIZES.xs,
+    color: COLORS.textSecondary,
+    marginTop: 4,
+  },
   statDivider: { width: 1, backgroundColor: COLORS.border },
   quickActions: {
     backgroundColor: COLORS.white,
     padding: SPACING.md,
     marginBottom: SPACING.xs,
   },
-  sectionTitle: { fontSize: FONT_SIZES.md, fontWeight: 'bold', color: COLORS.textPrimary, marginBottom: SPACING.md },
+  sectionTitle: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    marginBottom: SPACING.md,
+  },
   quickGrid: { flexDirection: 'row', flexWrap: 'wrap' },
   quickItem: {
     width: '33.33%',
@@ -232,7 +301,11 @@ const styles = StyleSheet.create({
   menuItemBorder: { borderBottomWidth: 1, borderBottomColor: COLORS.border },
   menuIcon: { fontSize: 22, width: 32, textAlign: 'center' },
   menuContent: { flex: 1 },
-  menuLabel: { fontSize: FONT_SIZES.md, color: COLORS.textPrimary, fontWeight: '500' },
+  menuLabel: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textPrimary,
+    fontWeight: '500',
+  },
   menuDesc: { fontSize: FONT_SIZES.xs, color: COLORS.textHint, marginTop: 2 },
   menuArrow: { fontSize: 22, color: COLORS.textHint },
   logoutBtn: {
@@ -246,6 +319,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.danger,
   },
-  logoutText: { color: COLORS.danger, fontSize: FONT_SIZES.md, fontWeight: '600' },
-  version: { textAlign: 'center', fontSize: FONT_SIZES.xs, color: COLORS.textHint, marginBottom: SPACING.sm },
+  logoutText: {
+    color: COLORS.danger,
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+  },
+  version: {
+    textAlign: 'center',
+    fontSize: FONT_SIZES.xs,
+    color: COLORS.textHint,
+    marginBottom: SPACING.sm,
+  },
 });

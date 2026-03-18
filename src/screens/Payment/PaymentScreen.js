@@ -64,7 +64,7 @@ export default function PaymentScreen({ navigation, route }) {
       Alert.alert(
         '支付成功 🎉',
         `已成功提交付款信息！\n金额：${formatPriceFull(totalAmount)}\n方式：${
-          PAYMENT_METHODS.find(m => m.key === selectedMethod)?.label
+          PAYMENT_METHODS.find((m) => m.key === selectedMethod)?.label
         }`,
         [
           {
@@ -102,7 +102,9 @@ export default function PaymentScreen({ navigation, route }) {
           </View>
           {payItems.map((item, i) => (
             <View key={i} style={styles.itemRow}>
-              <Text style={styles.itemName} numberOfLines={1}>{item.name}</Text>
+              <Text style={styles.itemName} numberOfLines={1}>
+                {item.name}
+              </Text>
               <Text style={styles.itemQty}>× {item.qty}</Text>
               <Text style={styles.itemSubtotal}>{formatPriceFull(item.price * item.qty)}</Text>
             </View>
@@ -133,14 +135,19 @@ export default function PaymentScreen({ navigation, route }) {
         {/* Payment Method */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>支付方式</Text>
-          {PAYMENT_METHODS.map(method => (
+          {PAYMENT_METHODS.map((method) => (
             <TouchableOpacity
               key={method.key}
               style={[styles.methodItem, selectedMethod === method.key && styles.methodItemActive]}
               onPress={() => setSelectedMethod(method.key)}
             >
               <Text style={styles.methodIcon}>{method.icon}</Text>
-              <Text style={[styles.methodLabel, selectedMethod === method.key && styles.methodLabelActive]}>
+              <Text
+                style={[
+                  styles.methodLabel,
+                  selectedMethod === method.key && styles.methodLabelActive,
+                ]}
+              >
                 {method.label}
               </Text>
               <View style={[styles.radio, selectedMethod === method.key && styles.radioSelected]}>
@@ -156,14 +163,16 @@ export default function PaymentScreen({ navigation, route }) {
             <Text style={styles.cardTitle}>银行转账信息</Text>
             <View style={styles.bankInfoBox}>
               {Object.entries({
-                '开户银行': BANK_INFO.bankName,
-                '账户名称': BANK_INFO.accountName,
-                '账号': BANK_INFO.accountNumber,
-                '开户支行': BANK_INFO.branch,
+                开户银行: BANK_INFO.bankName,
+                账户名称: BANK_INFO.accountName,
+                账号: BANK_INFO.accountNumber,
+                开户支行: BANK_INFO.branch,
               }).map(([label, value]) => (
                 <View key={label} style={styles.bankRow}>
                   <Text style={styles.bankLabel}>{label}</Text>
-                  <Text style={styles.bankValue} selectable>{value}</Text>
+                  <Text style={styles.bankValue} selectable>
+                    {value}
+                  </Text>
                 </View>
               ))}
             </View>
@@ -185,9 +194,7 @@ export default function PaymentScreen({ navigation, route }) {
         {(selectedMethod === 'alipay' || selectedMethod === 'wechat') && (
           <View style={styles.card}>
             <View style={styles.qrPlaceholder}>
-              <Text style={styles.qrIcon}>
-                {selectedMethod === 'alipay' ? '💙' : '💚'}
-              </Text>
+              <Text style={styles.qrIcon}>{selectedMethod === 'alipay' ? '💙' : '💚'}</Text>
               <Text style={styles.qrTitle}>
                 {selectedMethod === 'alipay' ? '支付宝' : '微信'}扫码支付
               </Text>
@@ -228,9 +235,7 @@ export default function PaymentScreen({ navigation, route }) {
           onPress={handleConfirmPayment}
           disabled={processing}
         >
-          <Text style={styles.confirmBtnText}>
-            {processing ? '处理中...' : '确认付款'}
-          </Text>
+          <Text style={styles.confirmBtnText}>{processing ? '处理中...' : '确认付款'}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -250,7 +255,13 @@ const styles = StyleSheet.create({
   },
   backBtn: { width: 36 },
   backIcon: { fontSize: 28, color: COLORS.textPrimary },
-  headerTitle: { flex: 1, fontSize: FONT_SIZES.lg, fontWeight: 'bold', color: COLORS.textPrimary, textAlign: 'center' },
+  headerTitle: {
+    flex: 1,
+    fontSize: FONT_SIZES.lg,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    textAlign: 'center',
+  },
   card: {
     backgroundColor: COLORS.white,
     margin: SPACING.xs,
@@ -274,7 +285,11 @@ const styles = StyleSheet.create({
     paddingLeft: SPACING.sm,
   },
   infoRow: { flexDirection: 'row', marginBottom: SPACING.xs },
-  infoLabel: { width: 80, fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
+  infoLabel: {
+    width: 80,
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+  },
   infoValue: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary },
   itemRow: {
     flexDirection: 'row',
@@ -285,12 +300,36 @@ const styles = StyleSheet.create({
     marginTop: SPACING.xs,
   },
   itemName: { flex: 1, fontSize: FONT_SIZES.sm, color: COLORS.textPrimary },
-  itemQty: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary, marginHorizontal: SPACING.sm },
-  itemSubtotal: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary, fontWeight: '600' },
-  divider: { height: 1, backgroundColor: COLORS.border, marginVertical: SPACING.sm },
-  totalRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  totalLabel: { fontSize: FONT_SIZES.md, fontWeight: '600', color: COLORS.textPrimary },
-  totalAmount: { fontSize: FONT_SIZES.xxl, color: COLORS.danger, fontWeight: 'bold' },
+  itemQty: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+    marginHorizontal: SPACING.sm,
+  },
+  itemSubtotal: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textPrimary,
+    fontWeight: '600',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: COLORS.border,
+    marginVertical: SPACING.sm,
+  },
+  totalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  totalLabel: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+  },
+  totalAmount: {
+    fontSize: FONT_SIZES.xxl,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
   addressInput: {
     borderWidth: 1,
     borderColor: COLORS.border,
@@ -323,7 +362,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   radioSelected: { borderColor: COLORS.primary },
-  radioInner: { width: 10, height: 10, borderRadius: 5, backgroundColor: COLORS.primary },
+  radioInner: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: COLORS.primary,
+  },
   bankInfoBox: {
     backgroundColor: COLORS.lightGray,
     borderRadius: 6,
@@ -331,9 +375,23 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.md,
   },
   bankRow: { flexDirection: 'row', marginBottom: SPACING.xs },
-  bankLabel: { width: 72, fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
-  bankValue: { flex: 1, fontSize: FONT_SIZES.sm, color: COLORS.textPrimary, fontWeight: '500' },
-  voucherLabel: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary, fontWeight: '600', marginBottom: SPACING.xs },
+  bankLabel: {
+    width: 72,
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+  },
+  bankValue: {
+    flex: 1,
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textPrimary,
+    fontWeight: '500',
+  },
+  voucherLabel: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textPrimary,
+    fontWeight: '600',
+    marginBottom: SPACING.xs,
+  },
   voucherInput: {
     borderWidth: 1,
     borderColor: COLORS.border,
@@ -346,7 +404,12 @@ const styles = StyleSheet.create({
   bankHint: { fontSize: FONT_SIZES.xs, color: COLORS.textHint, lineHeight: 18 },
   qrPlaceholder: { alignItems: 'center', paddingVertical: SPACING.xl },
   qrIcon: { fontSize: 40, marginBottom: SPACING.sm },
-  qrTitle: { fontSize: FONT_SIZES.lg, fontWeight: 'bold', color: COLORS.textPrimary, marginBottom: SPACING.lg },
+  qrTitle: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    marginBottom: SPACING.lg,
+  },
   qrBox: {
     width: 200,
     height: 200,
@@ -358,8 +421,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightGray,
     marginBottom: SPACING.md,
   },
-  qrText: { fontSize: FONT_SIZES.md, color: COLORS.textSecondary, marginBottom: SPACING.sm },
-  qrAmount: { fontSize: FONT_SIZES.xxl, color: COLORS.danger, fontWeight: 'bold' },
+  qrText: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textSecondary,
+    marginBottom: SPACING.sm,
+  },
+  qrAmount: {
+    fontSize: FONT_SIZES.xxl,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
   qrHint: { fontSize: FONT_SIZES.xs, color: COLORS.textHint },
   noteInput: {
     borderWidth: 1,
@@ -377,9 +448,17 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
   },
-  footerAmountRow: { flexDirection: 'row', alignItems: 'center', marginBottom: SPACING.sm },
+  footerAmountRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.sm,
+  },
   footerLabel: { fontSize: FONT_SIZES.md, color: COLORS.textSecondary },
-  footerAmount: { fontSize: FONT_SIZES.xxl, color: COLORS.danger, fontWeight: 'bold' },
+  footerAmount: {
+    fontSize: FONT_SIZES.xxl,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
   confirmBtn: {
     backgroundColor: COLORS.primary,
     borderRadius: 10,
@@ -388,5 +467,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   confirmBtnDisabled: { backgroundColor: COLORS.gray },
-  confirmBtnText: { color: COLORS.white, fontSize: FONT_SIZES.lg, fontWeight: 'bold' },
+  confirmBtnText: {
+    color: COLORS.white,
+    fontSize: FONT_SIZES.lg,
+    fontWeight: 'bold',
+  },
 });

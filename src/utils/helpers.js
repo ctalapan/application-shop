@@ -23,9 +23,13 @@ export function formatPriceFull(price) {
  * Format date string to localized YYYY-MM-DD format using UTC to avoid timezone shifts
  */
 export function formatDate(dateStr) {
-  if (!dateStr) return '';
+  if (!dateStr) {
+    return '';
+  }
   const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return dateStr;
+  if (isNaN(d.getTime())) {
+    return dateStr;
+  }
   return d.toISOString().split('T')[0];
 }
 
@@ -101,7 +105,9 @@ export function generateId(prefix = 'id') {
 export function debounce(fn, delay = 300) {
   let timer = null;
   return (...args) => {
-    if (timer) clearTimeout(timer);
+    if (timer) {
+      clearTimeout(timer);
+    }
     timer = setTimeout(() => {
       fn(...args);
       timer = null;
@@ -118,29 +124,29 @@ export function filterProducts(products, filters) {
   if (filters.keyword) {
     const kw = filters.keyword.toLowerCase();
     result = result.filter(
-      p =>
+      (p) =>
         p.name.toLowerCase().includes(kw) ||
         p.brand.toLowerCase().includes(kw) ||
         p.supplierName.toLowerCase().includes(kw),
     );
   }
   if (filters.category && filters.category !== 'all') {
-    result = result.filter(p => p.category === filters.category);
+    result = result.filter((p) => p.category === filters.category);
   }
   if (filters.brand && filters.brand !== 'all') {
-    result = result.filter(p => p.brand === filters.brand);
+    result = result.filter((p) => p.brand === filters.brand);
   }
   if (filters.region && filters.region !== 'all') {
-    result = result.filter(p => p.region === filters.region);
+    result = result.filter((p) => p.region === filters.region);
   }
   if (filters.minPrice != null && filters.minPrice !== '') {
-    result = result.filter(p => p.price >= Number(filters.minPrice));
+    result = result.filter((p) => p.price >= Number(filters.minPrice));
   }
   if (filters.maxPrice != null && filters.maxPrice !== '') {
-    result = result.filter(p => p.price <= Number(filters.maxPrice));
+    result = result.filter((p) => p.price <= Number(filters.maxPrice));
   }
   if (filters.minOrder != null && filters.minOrder !== '') {
-    result = result.filter(p => p.minOrder <= Number(filters.minOrder));
+    result = result.filter((p) => p.minOrder <= Number(filters.minOrder));
   }
 
   switch (filters.sort) {
@@ -167,11 +173,15 @@ export function filterProducts(products, filters) {
  * Format badge count (e.g., 99+ for large numbers)
  */
 export function formatBadgeCount(count) {
-  if (count <= 0) return null;
+  if (count <= 0) {
+    return null;
+  }
   return count > 99 ? '99+' : String(count);
 }
- */
+
 export function truncate(str, max = 30) {
-  if (!str) return '';
+  if (!str) {
+    return '';
+  }
   return str.length > max ? str.slice(0, max) + '…' : str;
 }

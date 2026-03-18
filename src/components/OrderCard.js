@@ -26,7 +26,9 @@ export default function OrderCard({ order, onPress }) {
           </Text>
         ))}
         {order.items.length > 2 && (
-          <Text style={styles.moreItems}>共{order.items.length}种商品，{itemCount}件</Text>
+          <Text style={styles.moreItems}>
+            共{order.items.length}种商品，{itemCount}件
+          </Text>
         )}
       </View>
 

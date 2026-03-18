@@ -23,15 +23,19 @@ export default function PurchaseOrderScreen({ navigation }) {
   } = useAppContext();
 
   const items = state.purchaseOrderItems;
-  const selectedItems = items.filter(i => i.selected);
+  const selectedItems = items.filter((i) => i.selected);
   const allSelected = items.length > 0 && selectedItems.length === items.length;
   const totalAmount = selectedItems.reduce((s, i) => s + i.price * i.qty, 0);
 
   const handleDelete = useCallback(
-    ids => {
+    (ids) => {
       Alert.alert('删除商品', '确定要从采购单中删除选中商品吗？', [
         { text: '取消', style: 'cancel' },
-        { text: '删除', style: 'destructive', onPress: () => removeFromPurchaseOrder(ids) },
+        {
+          text: '删除',
+          style: 'destructive',
+          onPress: () => removeFromPurchaseOrder(ids),
+        },
       ]);
     },
     [removeFromPurchaseOrder],
@@ -42,15 +46,15 @@ export default function PurchaseOrderScreen({ navigation }) {
       Alert.alert('提示', '请先选择要提交的商品');
       return;
     }
-    navigation.navigate('Payment', { items: selectedItems, fromPurchaseOrder: true });
+    navigation.navigate('Payment', {
+      items: selectedItems,
+      fromPurchaseOrder: true,
+    });
   };
 
   const renderItem = ({ item }) => (
     <View style={styles.itemCard}>
-      <TouchableOpacity
-        style={styles.checkbox}
-        onPress={() => togglePurchaseOrderSelect(item.id)}
-      >
+      <TouchableOpacity style={styles.checkbox} onPress={() => togglePurchaseOrderSelect(item.id)}>
         <View style={[styles.checkboxInner, item.selected && styles.checkboxChecked]}>
           {item.selected && <Text style={styles.checkMark}>✓</Text>}
         </View>
@@ -59,7 +63,9 @@ export default function PurchaseOrderScreen({ navigation }) {
       <Image source={{ uri: item.image }} style={styles.itemImage} />
 
       <View style={styles.itemInfo}>
-        <Text style={styles.itemName} numberOfLines={2}>{item.name}</Text>
+        <Text style={styles.itemName} numberOfLines={2}>
+          {item.name}
+        </Text>
         <Text style={styles.itemSupplier}>{item.supplierName}</Text>
         <Text style={styles.itemPrice}>{formatPrice(item.price, item.unit)}</Text>
         <View style={styles.qtyRow}>
@@ -78,10 +84,7 @@ export default function PurchaseOrderScreen({ navigation }) {
             <Text style={styles.qtyBtnText}>＋</Text>
           </TouchableOpacity>
           <Text style={styles.qtyUnit}>{item.unit}</Text>
-          <TouchableOpacity
-            style={styles.deleteBtn}
-            onPress={() => handleDelete([item.id])}
-          >
+          <TouchableOpacity style={styles.deleteBtn} onPress={() => handleDelete([item.id])}>
             <Text style={styles.deleteBtnText}>🗑️</Text>
           </TouchableOpacity>
         </View>
@@ -95,7 +98,7 @@ export default function PurchaseOrderScreen({ navigation }) {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>采购单</Text>
         {selectedItems.length > 0 && (
-          <TouchableOpacity onPress={() => handleDelete(selectedItems.map(i => i.id))}>
+          <TouchableOpacity onPress={() => handleDelete(selectedItems.map((i) => i.id))}>
             <Text style={styles.deleteSelected}>删除选中</Text>
           </TouchableOpacity>
         )}
@@ -106,10 +109,7 @@ export default function PurchaseOrderScreen({ navigation }) {
           <Text style={styles.emptyIcon}>🛒</Text>
           <Text style={styles.emptyTitle}>采购单为空</Text>
           <Text style={styles.emptyHint}>快去挑选您需要的商品吧！</Text>
-          <TouchableOpacity
-            style={styles.shopBtn}
-            onPress={() => navigation.navigate('Home')}
-          >
+          <TouchableOpacity style={styles.shopBtn} onPress={() => navigation.navigate('Home')}>
             <Text style={styles.shopBtnText}>去逛逛</Text>
           </TouchableOpacity>
         </View>
@@ -117,7 +117,7 @@ export default function PurchaseOrderScreen({ navigation }) {
         <>
           <FlatList
             data={items}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             renderItem={renderItem}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
@@ -137,9 +137,7 @@ export default function PurchaseOrderScreen({ navigation }) {
 
             <View style={styles.totalSection}>
               <View>
-                <Text style={styles.totalLabel}>
-                  已选 {selectedItems.length} 件
-                </Text>
+                <Text style={styles.totalLabel}>已选 {selectedItems.length} 件</Text>
                 <Text style={styles.totalAmount}>合计：{formatPriceFull(totalAmount)}</Text>
               </View>
               <TouchableOpacity
@@ -148,7 +146,8 @@ export default function PurchaseOrderScreen({ navigation }) {
                 disabled={selectedItems.length === 0}
               >
                 <Text style={styles.submitBtnText}>
-                  提交采购单{selectedItems.length > 0 ? `(${selectedItems.length})` : ''}
+                  提交采购单
+                  {selectedItems.length > 0 ? `(${selectedItems.length})` : ''}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -171,7 +170,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  headerTitle: { fontSize: FONT_SIZES.lg, fontWeight: 'bold', color: COLORS.textPrimary },
+  headerTitle: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+  },
   deleteSelected: { fontSize: FONT_SIZES.sm, color: COLORS.danger },
   listContent: { paddingVertical: SPACING.sm, paddingBottom: SPACING.xxxl },
   itemCard: {
@@ -198,7 +201,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  checkboxChecked: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
+  checkboxChecked: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
   checkMark: { color: COLORS.white, fontSize: 12, fontWeight: 'bold' },
   itemImage: {
     width: 80,
@@ -208,9 +214,24 @@ const styles = StyleSheet.create({
     marginRight: SPACING.sm,
   },
   itemInfo: { flex: 1 },
-  itemName: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary, fontWeight: '500', lineHeight: 18, marginBottom: 2 },
-  itemSupplier: { fontSize: FONT_SIZES.xs, color: COLORS.textHint, marginBottom: 4 },
-  itemPrice: { fontSize: FONT_SIZES.md, color: COLORS.danger, fontWeight: 'bold', marginBottom: SPACING.sm },
+  itemName: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textPrimary,
+    fontWeight: '500',
+    lineHeight: 18,
+    marginBottom: 2,
+  },
+  itemSupplier: {
+    fontSize: FONT_SIZES.xs,
+    color: COLORS.textHint,
+    marginBottom: 4,
+  },
+  itemPrice: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+    marginBottom: SPACING.sm,
+  },
   qtyRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs },
   qtyBtn: {
     width: 28,
@@ -223,11 +244,21 @@ const styles = StyleSheet.create({
   },
   qtyBtnDisabled: { opacity: 0.4 },
   qtyBtnText: { fontSize: FONT_SIZES.md, color: COLORS.textPrimary },
-  qtyValue: { minWidth: 32, textAlign: 'center', fontSize: FONT_SIZES.md, color: COLORS.textPrimary, fontWeight: '600' },
+  qtyValue: {
+    minWidth: 32,
+    textAlign: 'center',
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textPrimary,
+    fontWeight: '600',
+  },
   qtyUnit: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
   deleteBtn: { marginLeft: 'auto', padding: 4 },
   deleteBtnText: { fontSize: 18 },
-  subtotal: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary, marginTop: SPACING.xs },
+  subtotal: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+    marginTop: SPACING.xs,
+  },
   bottomBar: {
     backgroundColor: COLORS.white,
     borderTopWidth: 1,
@@ -237,11 +268,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.sm,
   },
-  selectAllBtn: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs, marginRight: SPACING.md },
+  selectAllBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.xs,
+    marginRight: SPACING.md,
+  },
   selectAllText: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary },
-  totalSection: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  totalSection: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   totalLabel: { fontSize: FONT_SIZES.xs, color: COLORS.textSecondary },
-  totalAmount: { fontSize: FONT_SIZES.md, color: COLORS.danger, fontWeight: 'bold' },
+  totalAmount: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
   submitBtn: {
     backgroundColor: COLORS.primary,
     borderRadius: 8,
@@ -249,11 +294,38 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm,
   },
   submitBtnDisabled: { backgroundColor: COLORS.gray },
-  submitBtnText: { color: COLORS.white, fontWeight: 'bold', fontSize: FONT_SIZES.md },
-  empty: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: 60 },
+  submitBtnText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: FONT_SIZES.md,
+  },
+  empty: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 60,
+  },
   emptyIcon: { fontSize: 64, marginBottom: SPACING.md },
-  emptyTitle: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.textPrimary, marginBottom: SPACING.xs },
-  emptyHint: { fontSize: FONT_SIZES.md, color: COLORS.textHint, marginBottom: SPACING.xl },
-  shopBtn: { backgroundColor: COLORS.primary, borderRadius: 24, paddingHorizontal: SPACING.xxxl, paddingVertical: SPACING.md },
-  shopBtnText: { color: COLORS.white, fontWeight: 'bold', fontSize: FONT_SIZES.md },
+  emptyTitle: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    marginBottom: SPACING.xs,
+  },
+  emptyHint: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textHint,
+    marginBottom: SPACING.xl,
+  },
+  shopBtn: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 24,
+    paddingHorizontal: SPACING.xxxl,
+    paddingVertical: SPACING.md,
+  },
+  shopBtnText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: FONT_SIZES.md,
+  },
 });

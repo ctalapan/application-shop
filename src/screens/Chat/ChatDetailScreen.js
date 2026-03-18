@@ -23,7 +23,8 @@ export default function ChatDetailScreen({ navigation, route }) {
   const flatListRef = useRef(null);
 
   // Get latest conversation from state
-  const currentConversation = state.conversations.find(c => c.id === conversation?.id) || conversation;
+  const currentConversation =
+    state.conversations.find((c) => c.id === conversation?.id) || conversation;
   const messages = currentConversation?.messages || [];
 
   useEffect(() => {
@@ -40,26 +41,32 @@ export default function ChatDetailScreen({ navigation, route }) {
 
   const handleSend = () => {
     const text = inputText.trim();
-    if (!text || !conversation?.id) return;
+    if (!text || !conversation?.id) {
+      return;
+    }
     sendMessage(conversation.id, text);
     setInputText('');
   };
 
   const handleAttach = () => {
     Alert.alert('发送图片', '选择图片发送方式', [
-      { text: '拍照', onPress: () => Alert.alert('提示', '相机功能需要真机运行') },
-      { text: '从相册选择', onPress: () => Alert.alert('提示', '相册功能需要真机运行') },
+      {
+        text: '拍照',
+        onPress: () => Alert.alert('提示', '相机功能需要真机运行'),
+      },
+      {
+        text: '从相册选择',
+        onPress: () => Alert.alert('提示', '相册功能需要真机运行'),
+      },
       { text: '取消', style: 'cancel' },
     ]);
   };
 
   const handleShareProduct = () => {
-    Alert.alert('分享商品', '选择要分享的商品', [
-      { text: '取消', style: 'cancel' },
-    ]);
+    Alert.alert('分享商品', '选择要分享的商品', [{ text: '取消', style: 'cancel' }]);
   };
 
-  const isUser = senderId => senderId === 'user' || senderId === CURRENT_USER.id;
+  const isUser = (senderId) => senderId === 'user' || senderId === CURRENT_USER.id;
 
   const renderMessage = ({ item }) => {
     const fromUser = isUser(item.senderId);
@@ -67,10 +74,7 @@ export default function ChatDetailScreen({ navigation, route }) {
     return (
       <View style={[styles.messageRow, fromUser ? styles.messageRowRight : styles.messageRowLeft]}>
         {!fromUser && (
-          <Image
-            source={{ uri: currentConversation?.supplierAvatar }}
-            style={styles.msgAvatar}
-          />
+          <Image source={{ uri: currentConversation?.supplierAvatar }} style={styles.msgAvatar} />
         )}
 
         <View style={styles.bubbleWrapper}>
@@ -82,7 +86,12 @@ export default function ChatDetailScreen({ navigation, route }) {
                 <Text style={styles.productCardPrice}>{item.productPrice}</Text>
               </View>
             ) : (
-              <Text style={[styles.bubbleText, fromUser ? styles.bubbleTextUser : styles.bubbleTextSupplier]}>
+              <Text
+                style={[
+                  styles.bubbleText,
+                  fromUser ? styles.bubbleTextUser : styles.bubbleTextSupplier,
+                ]}
+              >
                 {item.text}
               </Text>
             )}
@@ -92,12 +101,7 @@ export default function ChatDetailScreen({ navigation, route }) {
           </Text>
         </View>
 
-        {fromUser && (
-          <Image
-            source={{ uri: CURRENT_USER.avatar }}
-            style={styles.msgAvatar}
-          />
-        )}
+        {fromUser && <Image source={{ uri: CURRENT_USER.avatar }} style={styles.msgAvatar} />}
       </View>
     );
   };
@@ -135,7 +139,7 @@ export default function ChatDetailScreen({ navigation, route }) {
         <FlatList
           ref={flatListRef}
           data={messages}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           renderItem={renderMessage}
           contentContainerStyle={styles.messagesList}
           showsVerticalScrollIndicator={false}
@@ -144,7 +148,7 @@ export default function ChatDetailScreen({ navigation, route }) {
 
         {/* Quick Replies */}
         <View style={styles.quickReplies}>
-          {['请问有货吗？', '能否优惠？', '最快几天发货？'].map(text => (
+          {['请问有货吗？', '能否优惠？', '最快几天发货？'].map((text) => (
             <TouchableOpacity
               key={text}
               style={styles.quickReply}
@@ -198,13 +202,21 @@ const styles = StyleSheet.create({
   backBtn: { width: 36 },
   backIcon: { fontSize: 28, color: COLORS.textPrimary },
   headerCenter: { flex: 1, alignItems: 'center' },
-  headerTitle: { fontSize: FONT_SIZES.md, fontWeight: 'bold', color: COLORS.textPrimary },
+  headerTitle: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+  },
   headerSub: { fontSize: FONT_SIZES.xs, color: COLORS.success },
   moreBtn: { width: 36, alignItems: 'flex-end' },
   moreIcon: { fontSize: 22, color: COLORS.textSecondary },
   errorText: { textAlign: 'center', marginTop: 40, color: COLORS.textHint },
   messagesList: { padding: SPACING.md, paddingBottom: SPACING.xl },
-  messageRow: { flexDirection: 'row', marginBottom: SPACING.md, alignItems: 'flex-end' },
+  messageRow: {
+    flexDirection: 'row',
+    marginBottom: SPACING.md,
+    alignItems: 'flex-end',
+  },
   messageRowLeft: { justifyContent: 'flex-start' },
   messageRowRight: { justifyContent: 'flex-end' },
   msgAvatar: {
@@ -245,9 +257,21 @@ const styles = StyleSheet.create({
     padding: SPACING.sm,
     minWidth: 160,
   },
-  productCardLabel: { fontSize: FONT_SIZES.xs, color: 'rgba(255,255,255,0.8)', marginBottom: 4 },
-  productCardName: { fontSize: FONT_SIZES.sm, color: COLORS.white, fontWeight: '600' },
-  productCardPrice: { fontSize: FONT_SIZES.sm, color: 'rgba(255,255,255,0.9)', marginTop: 2 },
+  productCardLabel: {
+    fontSize: FONT_SIZES.xs,
+    color: 'rgba(255,255,255,0.8)',
+    marginBottom: 4,
+  },
+  productCardName: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.white,
+    fontWeight: '600',
+  },
+  productCardPrice: {
+    fontSize: FONT_SIZES.sm,
+    color: 'rgba(255,255,255,0.9)',
+    marginTop: 2,
+  },
   quickReplies: {
     flexDirection: 'row',
     paddingHorizontal: SPACING.md,
@@ -296,5 +320,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   sendBtnDisabled: { backgroundColor: COLORS.gray },
-  sendBtnText: { color: COLORS.white, fontWeight: 'bold', fontSize: FONT_SIZES.sm },
+  sendBtnText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: FONT_SIZES.sm,
+  },
 });

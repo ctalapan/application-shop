@@ -1,12 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING, PRODUCTS, SORT_OPTIONS } from '../../utils/constants';
 import { filterProducts } from '../../utils/helpers';
 import SearchBar from '../../components/SearchBar';
@@ -28,44 +21,65 @@ export default function SearchScreen({ navigation, route }) {
   const initialCategory = route.params?.category || 'all';
 
   const [keyword, setKeyword] = useState(initialKeyword);
-  const [filters, setFilters] = useState({ ...DEFAULT_FILTERS, category: initialCategory });
+  const [filters, setFilters] = useState({
+    ...DEFAULT_FILTERS,
+    category: initialCategory,
+  });
   const [filterVisible, setFilterVisible] = useState(false);
   const [viewMode, setViewMode] = useState('list');
 
   const results = filterProducts(PRODUCTS, { ...filters, keyword });
 
-  const handleApplyFilters = useCallback(newFilters => {
+  const handleApplyFilters = useCallback((newFilters) => {
     setFilters(newFilters);
   }, []);
 
   const handleProductPress = useCallback(
-    product => navigation.navigate('ProductDetail', { product }),
+    (product) => navigation.navigate('ProductDetail', { product }),
     [navigation],
   );
 
   // Build active filter tags
   const activeTags = [];
-  if (filters.category !== 'all') activeTags.push({ key: 'category', label: `分类：${filters.category}` });
-  if (filters.brand !== 'all') activeTags.push({ key: 'brand', label: `品牌：${filters.brand}` });
-  if (filters.region !== 'all') activeTags.push({ key: 'region', label: `地区：${filters.region}` });
+  if (filters.category !== 'all') {
+    activeTags.push({ key: 'category', label: `分类：${filters.category}` });
+  }
+  if (filters.brand !== 'all') {
+    activeTags.push({ key: 'brand', label: `品牌：${filters.brand}` });
+  }
+  if (filters.region !== 'all') {
+    activeTags.push({ key: 'region', label: `地区：${filters.region}` });
+  }
   if (filters.minPrice || filters.maxPrice) {
     activeTags.push({
       key: 'price',
       label: `价格：${filters.minPrice || '0'}~${filters.maxPrice || '∞'}`,
     });
   }
-  if (filters.minOrder) activeTags.push({ key: 'minOrder', label: `起订≤${filters.minOrder}` });
+  if (filters.minOrder) {
+    activeTags.push({ key: 'minOrder', label: `起订≤${filters.minOrder}` });
+  }
   if (filters.sort !== 'default') {
-    const opt = SORT_OPTIONS.find(s => s.key === filters.sort);
-    if (opt) activeTags.push({ key: 'sort', label: opt.label });
+    const opt = SORT_OPTIONS.find((s) => s.key === filters.sort);
+    if (opt) {
+      activeTags.push({ key: 'sort', label: opt.label });
+    }
   }
 
-  const removeTag = key => {
-    const reset = { category: 'all', brand: 'all', region: 'all', minPrice: '', maxPrice: '', minOrder: '', sort: 'default' };
+  const removeTag = (key) => {
+    const reset = {
+      category: 'all',
+      brand: 'all',
+      region: 'all',
+      minPrice: '',
+      maxPrice: '',
+      minOrder: '',
+      sort: 'default',
+    };
     if (key === 'price') {
-      setFilters(prev => ({ ...prev, minPrice: '', maxPrice: '' }));
+      setFilters((prev) => ({ ...prev, minPrice: '', maxPrice: '' }));
     } else if (reset[key] !== undefined) {
-      setFilters(prev => ({ ...prev, [key]: reset[key] }));
+      setFilters((prev) => ({ ...prev, [key]: reset[key] }));
     }
   };
 
@@ -73,11 +87,11 @@ export default function SearchScreen({ navigation, route }) {
     <View>
       {/* Sort bar */}
       <View style={styles.sortBar}>
-        {SORT_OPTIONS.map(opt => (
+        {SORT_OPTIONS.map((opt) => (
           <TouchableOpacity
             key={opt.key}
             style={[styles.sortItem, filters.sort === opt.key && styles.sortItemActive]}
-            onPress={() => setFilters(prev => ({ ...prev, sort: opt.key }))}
+            onPress={() => setFilters((prev) => ({ ...prev, sort: opt.key }))}
           >
             <Text style={[styles.sortText, filters.sort === opt.key && styles.sortTextActive]}>
               {opt.label}
@@ -89,8 +103,12 @@ export default function SearchScreen({ navigation, route }) {
       {/* Active filter tags */}
       {activeTags.length > 0 && (
         <View style={styles.tagsRow}>
-          {activeTags.map(tag => (
-            <TouchableOpacity key={tag.key} style={styles.activeTag} onPress={() => removeTag(tag.key)}>
+          {activeTags.map((tag) => (
+            <TouchableOpacity
+              key={tag.key}
+              style={styles.activeTag}
+              onPress={() => removeTag(tag.key)}
+            >
               <Text style={styles.activeTagText}>{tag.label} ✕</Text>
             </TouchableOpacity>
           ))}
@@ -100,7 +118,7 @@ export default function SearchScreen({ navigation, route }) {
       {/* Result count */}
       <View style={styles.resultRow}>
         <Text style={styles.resultCount}>找到 {results.length} 件商品</Text>
-        <TouchableOpacity onPress={() => setViewMode(v => v === 'grid' ? 'list' : 'grid')}>
+        <TouchableOpacity onPress={() => setViewMode((v) => (v === 'grid' ? 'list' : 'grid'))}>
           <Text style={styles.viewModeBtn}>{viewMode === 'grid' ? '≡ 列表' : '⊞ 网格'}</Text>
         </TouchableOpacity>
       </View>
@@ -125,16 +143,8 @@ export default function SearchScreen({ navigation, route }) {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backIcon}>‹</Text>
         </TouchableOpacity>
-        <SearchBar
-          value={keyword}
-          onChangeText={setKeyword}
-          onSubmit={() => {}}
-          editable
-        />
-        <TouchableOpacity
-          style={styles.filterBtn}
-          onPress={() => setFilterVisible(true)}
-        >
+        <SearchBar value={keyword} onChangeText={setKeyword} onSubmit={() => {}} editable />
+        <TouchableOpacity style={styles.filterBtn} onPress={() => setFilterVisible(true)}>
           <Text style={styles.filterBtnText}>筛选</Text>
           {activeTags.length > 0 && (
             <View style={styles.filterBadge}>
@@ -146,7 +156,7 @@ export default function SearchScreen({ navigation, route }) {
 
       <FlatList
         data={results}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         numColumns={viewMode === 'grid' ? 2 : 1}
         key={viewMode}
         renderItem={renderProduct}

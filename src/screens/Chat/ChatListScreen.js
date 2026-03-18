@@ -18,10 +18,7 @@ export default function ChatListScreen({ navigation }) {
   const [search, setSearch] = useState('');
 
   const conversations = state.conversations.filter(
-    c =>
-      !search ||
-      c.supplierName.includes(search) ||
-      c.lastMessage.includes(search),
+    (c) => !search || c.supplierName.includes(search) || c.lastMessage.includes(search),
   );
 
   const totalUnread = state.conversations.reduce((s, c) => s + c.unreadCount, 0);
@@ -36,9 +33,7 @@ export default function ChatListScreen({ navigation }) {
         <Image source={{ uri: item.supplierAvatar }} style={styles.avatar} />
         {item.unreadCount > 0 && (
           <View style={styles.unreadBadge}>
-            <Text style={styles.unreadText}>
-              {formatBadgeCount(item.unreadCount)}
-            </Text>
+            <Text style={styles.unreadText}>{formatBadgeCount(item.unreadCount)}</Text>
           </View>
         )}
       </View>
@@ -57,9 +52,7 @@ export default function ChatListScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>
-          消息{totalUnread > 0 ? ` (${totalUnread})` : ''}
-        </Text>
+        <Text style={styles.headerTitle}>消息{totalUnread > 0 ? ` (${totalUnread})` : ''}</Text>
       </View>
 
       <View style={styles.searchContainer}>
@@ -80,7 +73,7 @@ export default function ChatListScreen({ navigation }) {
 
       <FlatList
         data={conversations}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListEmptyComponent={
@@ -104,7 +97,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  headerTitle: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.textPrimary },
+  headerTitle: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -118,7 +115,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
   },
   searchIcon: { fontSize: 16, marginRight: SPACING.xs },
-  searchInput: { flex: 1, fontSize: FONT_SIZES.md, color: COLORS.textPrimary, padding: 0 },
+  searchInput: {
+    flex: 1,
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textPrimary,
+    padding: 0,
+  },
   clearIcon: { fontSize: 12, color: COLORS.textHint, padding: 4 },
   chatItem: {
     flexDirection: 'row',
@@ -147,8 +149,16 @@ const styles = StyleSheet.create({
   },
   unreadText: { color: COLORS.white, fontSize: 10, fontWeight: 'bold' },
   chatInfo: { flex: 1 },
-  chatHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
-  supplierName: { fontSize: FONT_SIZES.md, fontWeight: '600', color: COLORS.textPrimary },
+  chatHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  supplierName: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+  },
   lastTime: { fontSize: FONT_SIZES.xs, color: COLORS.textHint },
   lastMessage: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
   separator: { height: 1, backgroundColor: COLORS.border, marginLeft: 80 },

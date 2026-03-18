@@ -74,8 +74,15 @@ export default function OrderDetailScreen({ navigation, route }) {
         {/* Status */}
         <View style={[styles.statusBanner, { backgroundColor: statusColor }]}>
           <Text style={styles.statusEmoji}>
-            {order.status === 'completed' ? '✅' : order.status === 'cancelled' ? '❌' :
-             order.status === 'shipped' ? '🚚' : order.status === 'processing' ? '⚙️' : '📝'}
+            {order.status === 'completed'
+              ? '✅'
+              : order.status === 'cancelled'
+              ? '❌'
+              : order.status === 'shipped'
+              ? '🚚'
+              : order.status === 'processing'
+              ? '⚙️'
+              : '📝'}
           </Text>
           <Text style={styles.statusLabel}>{statusLabel}</Text>
           {order.status === 'shipped' && order.trackingNumber && (
@@ -116,9 +123,13 @@ export default function OrderDetailScreen({ navigation, route }) {
               return (
                 <View key={step.status} style={styles.timelineRow}>
                   <View style={styles.timelineLeft}>
-                    <View style={[styles.timelineDot,
-                      isDone ? styles.timelineDotDone : styles.timelineDotPending,
-                      isCurrent && styles.timelineDotCurrent]}>
+                    <View
+                      style={[
+                        styles.timelineDot,
+                        isDone ? styles.timelineDotDone : styles.timelineDotPending,
+                        isCurrent && styles.timelineDotCurrent,
+                      ]}
+                    >
                       <Text style={styles.timelineDotIcon}>{isDone ? '✓' : ''}</Text>
                     </View>
                     {idx < TIMELINE.length - 1 && (
@@ -146,7 +157,9 @@ export default function OrderDetailScreen({ navigation, route }) {
             </View>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>运单号</Text>
-              <Text style={[styles.infoValue, { color: COLORS.primary }]}>{order.trackingNumber}</Text>
+              <Text style={[styles.infoValue, { color: COLORS.primary }]}>
+                {order.trackingNumber}
+              </Text>
             </View>
           </View>
         ) : null}
@@ -160,7 +173,9 @@ export default function OrderDetailScreen({ navigation, route }) {
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <View style={styles.itemMeta}>
-                  <Text style={styles.itemQty}>× {item.qty} {item.unit}</Text>
+                  <Text style={styles.itemQty}>
+                    × {item.qty} {item.unit}
+                  </Text>
                   <Text style={styles.itemPrice}>{formatPrice(item.price, item.unit)}</Text>
                 </View>
               </View>
@@ -182,8 +197,14 @@ export default function OrderDetailScreen({ navigation, route }) {
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>支付状态</Text>
-            <Text style={[styles.infoValue,
-              { color: order.paymentStatus === 'paid' ? COLORS.success : COLORS.warning }]}>
+            <Text
+              style={[
+                styles.infoValue,
+                {
+                  color: order.paymentStatus === 'paid' ? COLORS.success : COLORS.warning,
+                },
+              ]}
+            >
               {getPaymentStatusLabel(order.paymentStatus)}
             </Text>
           </View>
@@ -211,10 +232,7 @@ export default function OrderDetailScreen({ navigation, route }) {
             <Text style={styles.confirmBtnText}>确认收货</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity
-          style={styles.chatBtn}
-          onPress={() => navigation.navigate('Chat')}
-        >
+        <TouchableOpacity style={styles.chatBtn} onPress={() => navigation.navigate('Chat')}>
           <Text style={styles.chatBtnText}>联系供应商</Text>
         </TouchableOpacity>
       </View>
@@ -235,7 +253,13 @@ const styles = StyleSheet.create({
   },
   backBtn: { width: 36 },
   backIcon: { fontSize: 28, color: COLORS.textPrimary },
-  headerTitle: { flex: 1, fontSize: FONT_SIZES.lg, fontWeight: 'bold', color: COLORS.textPrimary, textAlign: 'center' },
+  headerTitle: {
+    flex: 1,
+    fontSize: FONT_SIZES.lg,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+    textAlign: 'center',
+  },
   errorText: { textAlign: 'center', marginTop: 40, color: COLORS.textHint },
   statusBanner: {
     padding: SPACING.lg,
@@ -243,8 +267,16 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xs,
   },
   statusEmoji: { fontSize: 36, marginBottom: SPACING.xs },
-  statusLabel: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.white },
-  trackingNum: { fontSize: FONT_SIZES.sm, color: 'rgba(255,255,255,0.85)', marginTop: 4 },
+  statusLabel: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.white,
+  },
+  trackingNum: {
+    fontSize: FONT_SIZES.sm,
+    color: 'rgba(255,255,255,0.85)',
+    marginTop: 4,
+  },
   card: {
     backgroundColor: COLORS.white,
     margin: SPACING.xs,
@@ -267,7 +299,11 @@ const styles = StyleSheet.create({
     paddingLeft: SPACING.sm,
   },
   infoRow: { flexDirection: 'row', marginBottom: SPACING.sm },
-  infoLabel: { width: 80, fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
+  infoLabel: {
+    width: 80,
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+  },
   infoValue: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary },
   timelineRow: { flexDirection: 'row', marginBottom: 0 },
   timelineLeft: { alignItems: 'center', marginRight: SPACING.md },
@@ -279,11 +315,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  timelineDotPending: { borderColor: COLORS.border, backgroundColor: COLORS.lightGray },
-  timelineDotDone: { borderColor: COLORS.primary, backgroundColor: COLORS.primary },
-  timelineDotCurrent: { borderColor: COLORS.primary, backgroundColor: COLORS.primaryLight },
+  timelineDotPending: {
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.lightGray,
+  },
+  timelineDotDone: {
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.primary,
+  },
+  timelineDotCurrent: {
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.primaryLight,
+  },
   timelineDotIcon: { color: COLORS.white, fontSize: 10, fontWeight: 'bold' },
-  timelineLine: { width: 2, flex: 1, minHeight: 24, backgroundColor: COLORS.border, marginVertical: 2 },
+  timelineLine: {
+    width: 2,
+    flex: 1,
+    minHeight: 24,
+    backgroundColor: COLORS.border,
+    marginVertical: 2,
+  },
   timelineLineDone: { backgroundColor: COLORS.primary },
   timelineContent: { flex: 1, paddingBottom: SPACING.md },
   timelineLabel: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary },
@@ -295,13 +346,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  itemDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: COLORS.primary, marginTop: 6, marginRight: SPACING.sm },
+  itemDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: COLORS.primary,
+    marginTop: 6,
+    marginRight: SPACING.sm,
+  },
   itemInfo: { flex: 1 },
-  itemName: { fontSize: FONT_SIZES.sm, color: COLORS.textPrimary, fontWeight: '500' },
+  itemName: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textPrimary,
+    fontWeight: '500',
+  },
   itemMeta: { flexDirection: 'row', gap: SPACING.md, marginTop: 4 },
   itemQty: { fontSize: FONT_SIZES.xs, color: COLORS.textSecondary },
   itemPrice: { fontSize: FONT_SIZES.xs, color: COLORS.textHint },
-  itemSubtotal: { fontSize: FONT_SIZES.md, color: COLORS.danger, fontWeight: 'bold' },
+  itemSubtotal: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -309,9 +375,21 @@ const styles = StyleSheet.create({
     paddingTop: SPACING.md,
     marginTop: SPACING.xs,
   },
-  totalLabel: { fontSize: FONT_SIZES.md, fontWeight: '600', color: COLORS.textPrimary },
-  totalAmount: { fontSize: FONT_SIZES.xl, color: COLORS.danger, fontWeight: 'bold' },
-  noteText: { fontSize: FONT_SIZES.sm, color: COLORS.textSecondary, lineHeight: 22 },
+  totalLabel: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+  },
+  totalAmount: {
+    fontSize: FONT_SIZES.xl,
+    color: COLORS.danger,
+    fontWeight: 'bold',
+  },
+  noteText: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+    lineHeight: 22,
+  },
   actionBar: {
     flexDirection: 'row',
     backgroundColor: COLORS.white,
@@ -328,7 +406,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  payBtnText: { color: COLORS.white, fontWeight: 'bold', fontSize: FONT_SIZES.md },
+  payBtnText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: FONT_SIZES.md,
+  },
   confirmBtn: {
     flex: 1,
     height: 44,
@@ -337,7 +419,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  confirmBtnText: { color: COLORS.white, fontWeight: 'bold', fontSize: FONT_SIZES.md },
+  confirmBtnText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: FONT_SIZES.md,
+  },
   chatBtn: {
     flex: 1,
     height: 44,
@@ -347,5 +433,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  chatBtnText: { color: COLORS.primary, fontWeight: '600', fontSize: FONT_SIZES.md },
+  chatBtnText: {
+    color: COLORS.primary,
+    fontWeight: '600',
+    fontSize: FONT_SIZES.md,
+  },
 });

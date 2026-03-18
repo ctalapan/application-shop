@@ -184,7 +184,8 @@ export const PRODUCTS = [
     ],
     sales: 3200,
     rating: 4.8,
-    description: '进口人体工学椅，透气网布背部设计，腰托高度可调，座椅角度可调，适合长时间办公使用。',
+    description:
+      '进口人体工学椅，透气网布背部设计，腰托高度可调，座椅角度可调，适合长时间办公使用。',
     specs: [
       { label: '材质', value: '高密度网布' },
       { label: '承重', value: '150kg' },
@@ -288,7 +289,8 @@ export const PRODUCTS = [
     images: ['https://picsum.photos/seed/prod7a/600/600'],
     sales: 2800,
     rating: 4.8,
-    description: '工业级盐酸，浓度31%，符合GB/T 320-2006国家标准，可用于钢铁酸洗、化学合成等工业用途。',
+    description:
+      '工业级盐酸，浓度31%，符合GB/T 320-2006国家标准，可用于钢铁酸洗、化学合成等工业用途。',
     specs: [
       { label: '浓度', value: '31%' },
       { label: '执行标准', value: 'GB/T 320-2006' },
@@ -313,7 +315,8 @@ export const PRODUCTS = [
     images: ['https://picsum.photos/seed/prod8a/600/600'],
     sales: 420,
     rating: 4.9,
-    description: '双酚A型环氧树脂E51，环氧当量185-192g/eq，广泛用于涂料、复合材料、电子封装等领域。',
+    description:
+      '双酚A型环氧树脂E51，环氧当量185-192g/eq，广泛用于涂料、复合材料、电子封装等领域。',
     specs: [
       { label: '型号', value: 'E51' },
       { label: '环氧当量', value: '185-192g/eq' },
@@ -391,7 +394,8 @@ export const PRODUCTS = [
     images: ['https://picsum.photos/seed/prod11a/600/600'],
     sales: 230,
     rating: 4.9,
-    description: '企业级2U机架式服务器，双路处理器，支持最大3TB ECC内存，适用于数据中心、云计算等场景。',
+    description:
+      '企业级2U机架式服务器，双路处理器，支持最大3TB ECC内存，适用于数据中心、云计算等场景。',
     specs: [
       { label: '处理器', value: '双路 Xeon Gold 6230R' },
       { label: '内存', value: '最大3TB DDR4 ECC' },
@@ -644,8 +648,20 @@ export const ORDERS = [
     supplierId: 's1',
     supplierName: '深圳科技有限公司',
     items: [
-      { productId: 'p1', name: '商用笔记本电脑 i7 16G', qty: 10, price: 4999, unit: '台' },
-      { productId: 'p17', name: '商用扫码枪 二维码 USB', qty: 20, price: 420, unit: '把' },
+      {
+        productId: 'p1',
+        name: '商用笔记本电脑 i7 16G',
+        qty: 10,
+        price: 4999,
+        unit: '台',
+      },
+      {
+        productId: 'p17',
+        name: '商用扫码枪 二维码 USB',
+        qty: 20,
+        price: 420,
+        unit: '把',
+      },
     ],
     totalAmount: 58390,
     paymentMethod: 'bank_transfer',
@@ -662,9 +678,27 @@ export const ORDERS = [
     supplierId: 's2',
     supplierName: '上海办公用品集团',
     items: [
-      { productId: 'p3', name: '人体工学办公椅 网布', qty: 50, price: 1299, unit: '把' },
-      { productId: 'p4', name: 'A4复印纸 80g 10箱', qty: 100, price: 280, unit: '箱' },
-      { productId: 'p13', name: '不锈钢办公文件柜 四层', qty: 20, price: 680, unit: '个' },
+      {
+        productId: 'p3',
+        name: '人体工学办公椅 网布',
+        qty: 50,
+        price: 1299,
+        unit: '把',
+      },
+      {
+        productId: 'p4',
+        name: 'A4复印纸 80g 10箱',
+        qty: 100,
+        price: 280,
+        unit: '箱',
+      },
+      {
+        productId: 'p13',
+        name: '不锈钢办公文件柜 四层',
+        qty: 20,
+        price: 680,
+        unit: '个',
+      },
     ],
     totalAmount: 106550,
     paymentMethod: 'alipay',
@@ -681,7 +715,13 @@ export const ORDERS = [
     supplierId: 's3',
     supplierName: '浙江机械制造厂',
     items: [
-      { productId: 'p5', name: '工业数控车床 CNC-2000', qty: 2, price: 128000, unit: '台' },
+      {
+        productId: 'p5',
+        name: '工业数控车床 CNC-2000',
+        qty: 2,
+        price: 128000,
+        unit: '台',
+      },
     ],
     totalAmount: 256000,
     paymentMethod: 'bank_transfer',
@@ -698,7 +738,13 @@ export const ORDERS = [
     supplierId: 's4',
     supplierName: '广州化工原料公司',
     items: [
-      { productId: 'p7', name: '工业盐酸 31% 浓度', qty: 20, price: 380, unit: '吨' },
+      {
+        productId: 'p7',
+        name: '工业盐酸 31% 浓度',
+        qty: 20,
+        price: 380,
+        unit: '吨',
+      },
     ],
     totalAmount: 7600,
     paymentMethod: 'wechat',
@@ -715,8 +761,20 @@ export const ORDERS = [
     supplierId: 's5',
     supplierName: '苏州纺织品贸易',
     items: [
-      { productId: 'p9', name: '纯棉面料 32支 坯布', qty: 5000, price: 12, unit: '米' },
-      { productId: 'p10', name: '涤纶速干面料 150D', qty: 3000, price: 8.5, unit: '米' },
+      {
+        productId: 'p9',
+        name: '纯棉面料 32支 坯布',
+        qty: 5000,
+        price: 12,
+        unit: '米',
+      },
+      {
+        productId: 'p10',
+        name: '涤纶速干面料 150D',
+        qty: 3000,
+        price: 8.5,
+        unit: '米',
+      },
     ],
     totalAmount: 85500,
     paymentMethod: 'bank_transfer',
@@ -733,8 +791,20 @@ export const ORDERS = [
     supplierId: 's1',
     supplierName: '深圳科技有限公司',
     items: [
-      { productId: 'p11', name: '商用服务器 2U 双路', qty: 5, price: 35000, unit: '台' },
-      { productId: 'p20', name: '企业级路由器 8口千兆', qty: 10, price: 1280, unit: '台' },
+      {
+        productId: 'p11',
+        name: '商用服务器 2U 双路',
+        qty: 5,
+        price: 35000,
+        unit: '台',
+      },
+      {
+        productId: 'p20',
+        name: '企业级路由器 8口千兆',
+        qty: 10,
+        price: 1280,
+        unit: '台',
+      },
     ],
     totalAmount: 187800,
     paymentMethod: 'bank_transfer',
@@ -751,8 +821,20 @@ export const ORDERS = [
     supplierId: 's4',
     supplierName: '广州化工原料公司',
     items: [
-      { productId: 'p8', name: '环氧树脂 双组分 E51', qty: 5, price: 18000, unit: '吨' },
-      { productId: 'p15', name: '聚氨酯发泡剂 单组分', qty: 500, price: 45, unit: '罐' },
+      {
+        productId: 'p8',
+        name: '环氧树脂 双组分 E51',
+        qty: 5,
+        price: 18000,
+        unit: '吨',
+      },
+      {
+        productId: 'p15',
+        name: '聚氨酯发泡剂 单组分',
+        qty: 500,
+        price: 45,
+        unit: '罐',
+      },
     ],
     totalAmount: 112500,
     paymentMethod: 'bank_transfer',
@@ -769,7 +851,13 @@ export const ORDERS = [
     supplierId: 's2',
     supplierName: '上海办公用品集团',
     items: [
-      { productId: 'p4', name: 'A4复印纸 80g 10箱', qty: 200, price: 280, unit: '箱' },
+      {
+        productId: 'p4',
+        name: 'A4复印纸 80g 10箱',
+        qty: 200,
+        price: 280,
+        unit: '箱',
+      },
     ],
     totalAmount: 56000,
     paymentMethod: 'alipay',
@@ -786,7 +874,13 @@ export const ORDERS = [
     supplierId: 's3',
     supplierName: '浙江机械制造厂',
     items: [
-      { productId: 'p19', name: '工业缝纫机 高速锁边', qty: 20, price: 3800, unit: '台' },
+      {
+        productId: 'p19',
+        name: '工业缝纫机 高速锁边',
+        qty: 20,
+        price: 3800,
+        unit: '台',
+      },
     ],
     totalAmount: 76000,
     paymentMethod: 'bank_transfer',
@@ -803,8 +897,20 @@ export const ORDERS = [
     supplierId: 's1',
     supplierName: '深圳科技有限公司',
     items: [
-      { productId: 'p12', name: '智能会议平板 75英寸', qty: 5, price: 12800, unit: '台' },
-      { productId: 'p2', name: '无线商用打印机 A3彩色', qty: 5, price: 2899, unit: '台' },
+      {
+        productId: 'p12',
+        name: '智能会议平板 75英寸',
+        qty: 5,
+        price: 12800,
+        unit: '台',
+      },
+      {
+        productId: 'p2',
+        name: '无线商用打印机 A3彩色',
+        qty: 5,
+        price: 2899,
+        unit: '台',
+      },
     ],
     totalAmount: 78495,
     paymentMethod: 'wechat',

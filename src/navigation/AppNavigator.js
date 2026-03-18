@@ -137,9 +137,7 @@ export default function AppNavigator() {
         component={ChatStack}
         options={{
           tabBarLabel: '聊天',
-          tabBarIcon: ({ focused }) => (
-            <TabIcon emoji="💬" focused={focused} badge={totalUnread} />
-          ),
+          tabBarIcon: ({ focused }) => <TabIcon emoji="💬" focused={focused} badge={totalUnread} />,
         }}
       />
       <Tab.Screen

@@ -42,11 +42,11 @@ function appReducer(state, action) {
   switch (action.type) {
     case ACTIONS.ADD_TO_PURCHASE_ORDER: {
       const { product, qty } = action.payload;
-      const existing = state.purchaseOrderItems.find(i => i.productId === product.id);
+      const existing = state.purchaseOrderItems.find((i) => i.productId === product.id);
       if (existing) {
         return {
           ...state,
-          purchaseOrderItems: state.purchaseOrderItems.map(i =>
+          purchaseOrderItems: state.purchaseOrderItems.map((i) =>
             i.productId === product.id ? { ...i, qty: i.qty + qty } : i,
           ),
         };
@@ -76,14 +76,14 @@ function appReducer(state, action) {
       return {
         ...state,
         purchaseOrderItems: state.purchaseOrderItems.filter(
-          i => !action.payload.ids.includes(i.id),
+          (i) => !action.payload.ids.includes(i.id),
         ),
       };
 
     case ACTIONS.UPDATE_PURCHASE_ORDER_QTY:
       return {
         ...state,
-        purchaseOrderItems: state.purchaseOrderItems.map(i =>
+        purchaseOrderItems: state.purchaseOrderItems.map((i) =>
           i.id === action.payload.id ? { ...i, qty: Math.max(i.minOrder, action.payload.qty) } : i,
         ),
       };
@@ -91,7 +91,7 @@ function appReducer(state, action) {
     case ACTIONS.TOGGLE_PURCHASE_ORDER_SELECT:
       return {
         ...state,
-        purchaseOrderItems: state.purchaseOrderItems.map(i =>
+        purchaseOrderItems: state.purchaseOrderItems.map((i) =>
           i.id === action.payload.id ? { ...i, selected: !i.selected } : i,
         ),
       };
@@ -99,7 +99,7 @@ function appReducer(state, action) {
     case ACTIONS.SELECT_ALL_PURCHASE_ORDER:
       return {
         ...state,
-        purchaseOrderItems: state.purchaseOrderItems.map(i => ({
+        purchaseOrderItems: state.purchaseOrderItems.map((i) => ({
           ...i,
           selected: action.payload.selected,
         })),
@@ -108,12 +108,12 @@ function appReducer(state, action) {
     case ACTIONS.SUBMIT_PURCHASE_ORDER: {
       const { items, paymentMethod, shippingAddress, note } = action.payload;
       const newOrder = {
-        id: `ORD-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
+        id: generateId(`ORD-${new Date().getFullYear()}`),
         date: new Date().toISOString().split('T')[0],
         status: 'pending',
         supplierId: items[0]?.supplierId || '',
         supplierName: items[0]?.supplierName || '',
-        items: items.map(i => ({
+        items: items.map((i) => ({
           productId: i.productId,
           name: i.name,
           qty: i.qty,
@@ -128,11 +128,11 @@ function appReducer(state, action) {
         logisticsCompany: '',
         note: note || '',
       };
-      const submittedIds = items.map(i => i.id);
+      const submittedIds = items.map((i) => i.id);
       return {
         ...state,
         orders: [newOrder, ...state.orders],
-        purchaseOrderItems: state.purchaseOrderItems.filter(i => !submittedIds.includes(i.id)),
+        purchaseOrderItems: state.purchaseOrderItems.filter((i) => !submittedIds.includes(i.id)),
       };
     }
 
@@ -142,7 +142,7 @@ function appReducer(state, action) {
     case ACTIONS.UPDATE_ORDER_STATUS:
       return {
         ...state,
-        orders: state.orders.map(o =>
+        orders: state.orders.map((o) =>
           o.id === action.payload.id ? { ...o, status: action.payload.status } : o,
         ),
       };
@@ -151,13 +151,18 @@ function appReducer(state, action) {
       const { conversationId, message } = action.payload;
       return {
         ...state,
-        conversations: state.conversations.map(c => {
-          if (c.id !== conversationId) return c;
+        conversations: state.conversations.map((c) => {
+          if (c.id !== conversationId) {
+            return c;
+          }
           const newMsg = {
             id: generateId('msg'),
             senderId: 'user',
             text: message,
-            time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
+            time: new Date().toLocaleTimeString('zh-CN', {
+              hour: '2-digit',
+              minute: '2-digit',
+            }),
             type: 'text',
           };
           return {
@@ -173,7 +178,7 @@ function appReducer(state, action) {
     case ACTIONS.MARK_CONVERSATION_READ:
       return {
         ...state,
-        conversations: state.conversations.map(c =>
+        conversations: state.conversations.map((c) =>
           c.id === action.payload.conversationId ? { ...c, unreadCount: 0 } : c,
         ),
       };
@@ -191,10 +196,13 @@ export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   const addToPurchaseOrder = useCallback((product, qty) => {
-    dispatch({ type: ACTIONS.ADD_TO_PURCHASE_ORDER, payload: { product, qty } });
+    dispatch({
+      type: ACTIONS.ADD_TO_PURCHASE_ORDER,
+      payload: { product, qty },
+    });
   }, []);
 
-  const removeFromPurchaseOrder = useCallback(ids => {
+  const removeFromPurchaseOrder = useCallback((ids) => {
     dispatch({ type: ACTIONS.REMOVE_FROM_PURCHASE_ORDER, payload: { ids } });
   }, []);
 
@@ -202,15 +210,18 @@ export function AppProvider({ children }) {
     dispatch({ type: ACTIONS.UPDATE_PURCHASE_ORDER_QTY, payload: { id, qty } });
   }, []);
 
-  const togglePurchaseOrderSelect = useCallback(id => {
+  const togglePurchaseOrderSelect = useCallback((id) => {
     dispatch({ type: ACTIONS.TOGGLE_PURCHASE_ORDER_SELECT, payload: { id } });
   }, []);
 
-  const selectAllPurchaseOrder = useCallback(selected => {
-    dispatch({ type: ACTIONS.SELECT_ALL_PURCHASE_ORDER, payload: { selected } });
+  const selectAllPurchaseOrder = useCallback((selected) => {
+    dispatch({
+      type: ACTIONS.SELECT_ALL_PURCHASE_ORDER,
+      payload: { selected },
+    });
   }, []);
 
-  const submitPurchaseOrder = useCallback(payload => {
+  const submitPurchaseOrder = useCallback((payload) => {
     dispatch({ type: ACTIONS.SUBMIT_PURCHASE_ORDER, payload });
   }, []);
 
@@ -219,14 +230,20 @@ export function AppProvider({ children }) {
   }, []);
 
   const sendMessage = useCallback((conversationId, message) => {
-    dispatch({ type: ACTIONS.SEND_MESSAGE, payload: { conversationId, message } });
+    dispatch({
+      type: ACTIONS.SEND_MESSAGE,
+      payload: { conversationId, message },
+    });
   }, []);
 
-  const markConversationRead = useCallback(conversationId => {
-    dispatch({ type: ACTIONS.MARK_CONVERSATION_READ, payload: { conversationId } });
+  const markConversationRead = useCallback((conversationId) => {
+    dispatch({
+      type: ACTIONS.MARK_CONVERSATION_READ,
+      payload: { conversationId },
+    });
   }, []);
 
-  const updateUser = useCallback(data => {
+  const updateUser = useCallback((data) => {
     dispatch({ type: ACTIONS.UPDATE_USER, payload: data });
   }, []);
 
@@ -261,6 +278,8 @@ export function AppProvider({ children }) {
 
 export function useAppContext() {
   const ctx = useContext(AppContext);
-  if (!ctx) throw new Error('useAppContext must be used within AppProvider');
+  if (!ctx) {
+    throw new Error('useAppContext must be used within AppProvider');
+  }
   return ctx;
 }

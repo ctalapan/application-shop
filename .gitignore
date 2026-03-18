@@ -4,3 +4,4 @@ ios/
 .bundle/
 *.keystore
 *.jks
+package-lock.json

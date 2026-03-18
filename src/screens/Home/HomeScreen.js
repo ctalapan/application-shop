@@ -35,16 +35,16 @@ export default function HomeScreen({ navigation }) {
 
   const products = filterProducts(PRODUCTS, { ...filters, keyword });
 
-  const handleCategorySelect = useCallback(catId => {
-    setFilters(prev => ({ ...prev, category: catId }));
+  const handleCategorySelect = useCallback((catId) => {
+    setFilters((prev) => ({ ...prev, category: catId }));
   }, []);
 
-  const handleApplyFilters = useCallback(newFilters => {
+  const handleApplyFilters = useCallback((newFilters) => {
     setFilters(newFilters);
   }, []);
 
   const handleProductPress = useCallback(
-    product => navigation.navigate('ProductDetail', { product }),
+    (product) => navigation.navigate('ProductDetail', { product }),
     [navigation],
   );
 
@@ -79,7 +79,7 @@ export default function HomeScreen({ navigation }) {
           { label: '商品种类', value: '50万+' },
           { label: '企业客户', value: '10万+' },
           { label: '城市覆盖', value: '300+' },
-        ].map(s => (
+        ].map((s) => (
           <View key={s.label} style={styles.statItem}>
             <Text style={styles.statValue}>{s.value}</Text>
             <Text style={styles.statLabel}>{s.label}</Text>
@@ -145,7 +145,7 @@ export default function HomeScreen({ navigation }) {
 
       <FlatList
         data={products}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         numColumns={2}
         renderItem={renderProduct}
         ListHeaderComponent={renderHeader}

@@ -2,7 +2,14 @@ import React from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING } from '../utils/constants';
 
-export default function SearchBar({ value, onChangeText, onSubmit, onPress, placeholder, editable = true }) {
+export default function SearchBar({
+  value,
+  onChangeText,
+  onSubmit,
+  onPress,
+  placeholder,
+  editable = true,
+}) {
   return (
     <TouchableOpacity
       style={styles.container}

@@ -6,17 +6,28 @@ import { formatPrice } from '../utils/helpers';
 export default function ProductCard({ product, onPress, viewMode = 'grid' }) {
   if (viewMode === 'list') {
     return (
-      <TouchableOpacity style={styles.listCard} onPress={() => onPress(product)} activeOpacity={0.7}>
+      <TouchableOpacity
+        style={styles.listCard}
+        onPress={() => onPress(product)}
+        activeOpacity={0.7}
+      >
         <Image source={{ uri: product.image }} style={styles.listImage} />
         <View style={styles.listInfo}>
-          <Text style={styles.productName} numberOfLines={2}>{product.name}</Text>
+          <Text style={styles.productName} numberOfLines={2}>
+            {product.name}
+          </Text>
           <Text style={styles.brand}>{product.brand}</Text>
           <Text style={styles.price}>{formatPrice(product.price, product.unit)}</Text>
           <View style={styles.metaRow}>
-            <Text style={styles.metaText}>起订：{product.minOrder}{product.unit}</Text>
+            <Text style={styles.metaText}>
+              起订：{product.minOrder}
+              {product.unit}
+            </Text>
             <Text style={styles.metaText}>销量：{product.sales}</Text>
           </View>
-          <Text style={styles.supplier} numberOfLines={1}>{product.supplierName}</Text>
+          <Text style={styles.supplier} numberOfLines={1}>
+            {product.supplierName}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -26,10 +37,17 @@ export default function ProductCard({ product, onPress, viewMode = 'grid' }) {
     <TouchableOpacity style={styles.gridCard} onPress={() => onPress(product)} activeOpacity={0.7}>
       <Image source={{ uri: product.image }} style={styles.gridImage} />
       <View style={styles.gridInfo}>
-        <Text style={styles.productName} numberOfLines={2}>{product.name}</Text>
+        <Text style={styles.productName} numberOfLines={2}>
+          {product.name}
+        </Text>
         <Text style={styles.price}>{formatPrice(product.price, product.unit)}</Text>
-        <Text style={styles.minOrder}>起订：{product.minOrder}{product.unit}</Text>
-        <Text style={styles.supplier} numberOfLines={1}>{product.supplierName}</Text>
+        <Text style={styles.minOrder}>
+          起订：{product.minOrder}
+          {product.unit}
+        </Text>
+        <Text style={styles.supplier} numberOfLines={1}>
+          {product.supplierName}
+        </Text>
       </View>
     </TouchableOpacity>
   );

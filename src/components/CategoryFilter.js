@@ -10,7 +10,7 @@ export default function CategoryFilter({ selected, onSelect }) {
       style={styles.scroll}
       contentContainerStyle={styles.content}
     >
-      {CATEGORIES.map(cat => {
+      {CATEGORIES.map((cat) => {
         const isActive = selected === cat.id;
         return (
           <TouchableOpacity

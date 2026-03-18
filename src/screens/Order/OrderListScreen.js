@@ -27,18 +27,18 @@ export default function OrderListScreen({ navigation }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchText, setSearchText] = useState('');
 
-  const filteredOrders = state.orders.filter(o => {
+  const filteredOrders = state.orders.filter((o) => {
     const matchStatus = activeTab === 'all' || o.status === activeTab;
     const matchSearch =
       !searchText ||
       o.id.includes(searchText) ||
       o.supplierName.includes(searchText) ||
-      o.items.some(i => i.name.includes(searchText));
+      o.items.some((i) => i.name.includes(searchText));
     return matchStatus && matchSearch;
   });
 
   const handleOrderPress = useCallback(
-    order => navigation.navigate('OrderDetail', { order }),
+    (order) => navigation.navigate('OrderDetail', { order }),
     [navigation],
   );
 
@@ -71,11 +71,12 @@ export default function OrderListScreen({ navigation }) {
           data={STATUS_TABS}
           horizontal
           showsHorizontalScrollIndicator={false}
-          keyExtractor={item => item.key}
+          keyExtractor={(item) => item.key}
           renderItem={({ item }) => {
-            const count = item.key === 'all'
-              ? state.orders.length
-              : state.orders.filter(o => o.status === item.key).length;
+            const count =
+              item.key === 'all'
+                ? state.orders.length
+                : state.orders.filter((o) => o.status === item.key).length;
             const isActive = activeTab === item.key;
             return (
               <TouchableOpacity
@@ -95,7 +96,7 @@ export default function OrderListScreen({ navigation }) {
 
       <FlatList
         data={filteredOrders}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <OrderCard order={item} onPress={handleOrderPress} />}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
@@ -119,7 +120,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  headerTitle: { fontSize: FONT_SIZES.xl, fontWeight: 'bold', color: COLORS.textPrimary },
+  headerTitle: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: 'bold',
+    color: COLORS.textPrimary,
+  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -133,7 +138,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
   },
   searchIcon: { fontSize: 16, marginRight: SPACING.xs },
-  searchInput: { flex: 1, fontSize: FONT_SIZES.md, color: COLORS.textPrimary, padding: 0 },
+  searchInput: {
+    flex: 1,
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textPrimary,
+    padding: 0,
+  },
   clearIcon: { fontSize: 12, color: COLORS.textHint, padding: 4 },
   tabsContainer: {
     backgroundColor: COLORS.white,

@@ -9,7 +9,15 @@ import {
   ScrollView,
   Animated,
 } from 'react-native';
-import { COLORS, FONT_SIZES, SPACING, CATEGORIES, REGIONS, BRANDS, SORT_OPTIONS } from '../utils/constants';
+import {
+  COLORS,
+  FONT_SIZES,
+  SPACING,
+  CATEGORIES,
+  REGIONS,
+  BRANDS,
+  SORT_OPTIONS,
+} from '../utils/constants';
 
 const PRICE_RANGES = [
   { label: '不限', min: '', max: '' },
@@ -30,7 +38,7 @@ const MIN_ORDER_OPTIONS = [
 export default function FilterPanel({ visible, filters, onApply, onClose }) {
   const [localFilters, setLocalFilters] = useState({ ...filters });
 
-  const update = (key, value) => setLocalFilters(prev => ({ ...prev, [key]: value }));
+  const update = (key, value) => setLocalFilters((prev) => ({ ...prev, [key]: value }));
 
   const handleReset = () => {
     const reset = {
@@ -51,12 +59,7 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="slide"
-      transparent
-      onRequestClose={onClose}
-    >
+    <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
       <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={onClose} />
       <View style={styles.panel}>
         <View style={styles.handle} />
@@ -71,13 +74,15 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
           {/* Sort */}
           <Text style={styles.sectionTitle}>排序</Text>
           <View style={styles.tagRow}>
-            {SORT_OPTIONS.map(opt => (
+            {SORT_OPTIONS.map((opt) => (
               <TouchableOpacity
                 key={opt.key}
                 style={[styles.tag, localFilters.sort === opt.key && styles.tagActive]}
                 onPress={() => update('sort', opt.key)}
               >
-                <Text style={[styles.tagText, localFilters.sort === opt.key && styles.tagTextActive]}>
+                <Text
+                  style={[styles.tagText, localFilters.sort === opt.key && styles.tagTextActive]}
+                >
                   {opt.label}
                 </Text>
               </TouchableOpacity>
@@ -87,13 +92,15 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
           {/* Category */}
           <Text style={styles.sectionTitle}>分类</Text>
           <View style={styles.tagRow}>
-            {CATEGORIES.map(cat => (
+            {CATEGORIES.map((cat) => (
               <TouchableOpacity
                 key={cat.id}
                 style={[styles.tag, localFilters.category === cat.id && styles.tagActive]}
                 onPress={() => update('category', cat.id)}
               >
-                <Text style={[styles.tagText, localFilters.category === cat.id && styles.tagTextActive]}>
+                <Text
+                  style={[styles.tagText, localFilters.category === cat.id && styles.tagTextActive]}
+                >
                   {cat.name}
                 </Text>
               </TouchableOpacity>
@@ -103,13 +110,16 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
           {/* Price Range */}
           <Text style={styles.sectionTitle}>价格区间</Text>
           <View style={styles.tagRow}>
-            {PRICE_RANGES.map(r => {
+            {PRICE_RANGES.map((r) => {
               const isActive = localFilters.minPrice === r.min && localFilters.maxPrice === r.max;
               return (
                 <TouchableOpacity
                   key={r.label}
                   style={[styles.tag, isActive && styles.tagActive]}
-                  onPress={() => { update('minPrice', r.min); update('maxPrice', r.max); }}
+                  onPress={() => {
+                    update('minPrice', r.min);
+                    update('maxPrice', r.max);
+                  }}
                 >
                   <Text style={[styles.tagText, isActive && styles.tagTextActive]}>{r.label}</Text>
                 </TouchableOpacity>
@@ -122,7 +132,7 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
               placeholder="最低价(¥)"
               keyboardType="numeric"
               value={localFilters.minPrice}
-              onChangeText={v => update('minPrice', v)}
+              onChangeText={(v) => update('minPrice', v)}
               placeholderTextColor={COLORS.textHint}
             />
             <Text style={styles.priceSep}>—</Text>
@@ -131,7 +141,7 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
               placeholder="最高价(¥)"
               keyboardType="numeric"
               value={localFilters.maxPrice}
-              onChangeText={v => update('maxPrice', v)}
+              onChangeText={(v) => update('maxPrice', v)}
               placeholderTextColor={COLORS.textHint}
             />
           </View>
@@ -139,13 +149,18 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
           {/* Min Order */}
           <Text style={styles.sectionTitle}>起订量</Text>
           <View style={styles.tagRow}>
-            {MIN_ORDER_OPTIONS.map(opt => (
+            {MIN_ORDER_OPTIONS.map((opt) => (
               <TouchableOpacity
                 key={opt.label}
                 style={[styles.tag, localFilters.minOrder === opt.value && styles.tagActive]}
                 onPress={() => update('minOrder', opt.value)}
               >
-                <Text style={[styles.tagText, localFilters.minOrder === opt.value && styles.tagTextActive]}>
+                <Text
+                  style={[
+                    styles.tagText,
+                    localFilters.minOrder === opt.value && styles.tagTextActive,
+                  ]}
+                >
                   {opt.label}
                 </Text>
               </TouchableOpacity>
@@ -155,13 +170,15 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
           {/* Region */}
           <Text style={styles.sectionTitle}>地区</Text>
           <View style={styles.tagRow}>
-            {REGIONS.map(r => (
+            {REGIONS.map((r) => (
               <TouchableOpacity
                 key={r.id}
                 style={[styles.tag, localFilters.region === r.id && styles.tagActive]}
                 onPress={() => update('region', r.id)}
               >
-                <Text style={[styles.tagText, localFilters.region === r.id && styles.tagTextActive]}>
+                <Text
+                  style={[styles.tagText, localFilters.region === r.id && styles.tagTextActive]}
+                >
                   {r.name}
                 </Text>
               </TouchableOpacity>
@@ -171,7 +188,7 @@ export default function FilterPanel({ visible, filters, onApply, onClose }) {
           {/* Brand */}
           <Text style={styles.sectionTitle}>品牌</Text>
           <View style={styles.tagRow}>
-            {BRANDS.slice(0, 8).map(b => (
+            {BRANDS.slice(0, 8).map((b) => (
               <TouchableOpacity
                 key={b.id}
                 style={[styles.tag, localFilters.brand === b.id && styles.tagActive]}

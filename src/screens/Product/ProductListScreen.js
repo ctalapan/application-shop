@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native';
-import { COLORS, FONT_SIZES, SPACING, PRODUCTS, CATEGORIES, SORT_OPTIONS } from '../../utils/constants';
+  COLORS,
+  FONT_SIZES,
+  SPACING,
+  PRODUCTS,
+  CATEGORIES,
+  SORT_OPTIONS,
+} from '../../utils/constants';
 import { filterProducts } from '../../utils/helpers';
 import ProductCard from '../../components/ProductCard';
 import FilterPanel from '../../components/FilterPanel';
@@ -28,35 +28,38 @@ export default function ProductListScreen({ navigation, route }) {
   const initCategory = route.params?.category || 'all';
   const initKeyword = route.params?.keyword || '';
 
-  const [filters, setFilters] = useState({ ...DEFAULT_FILTERS, category: initCategory, keyword: initKeyword });
+  const [filters, setFilters] = useState({
+    ...DEFAULT_FILTERS,
+    category: initCategory,
+    keyword: initKeyword,
+  });
   const [filterVisible, setFilterVisible] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
 
   const products = filterProducts(PRODUCTS, filters);
 
   const handleProductPress = useCallback(
-    product => navigation.navigate('ProductDetail', { product }),
+    (product) => navigation.navigate('ProductDetail', { product }),
     [navigation],
   );
 
-  const renderProduct = ({ item }) => (
+  const renderProduct = ({ item }) =>
     viewMode === 'grid' ? (
       <View style={{ flex: 1, maxWidth: '50%' }}>
         <ProductCard product={item} onPress={handleProductPress} viewMode="grid" />
       </View>
     ) : (
       <ProductCard product={item} onPress={handleProductPress} viewMode="list" />
-    )
-  );
+    );
 
   const renderHeader = () => (
     <View>
       <View style={styles.sortBar}>
-        {SORT_OPTIONS.slice(0, 4).map(opt => (
+        {SORT_OPTIONS.slice(0, 4).map((opt) => (
           <TouchableOpacity
             key={opt.key}
             style={[styles.sortItem, filters.sort === opt.key && styles.sortItemActive]}
-            onPress={() => setFilters(prev => ({ ...prev, sort: opt.key }))}
+            onPress={() => setFilters((prev) => ({ ...prev, sort: opt.key }))}
           >
             <Text style={[styles.sortText, filters.sort === opt.key && styles.sortTextActive]}>
               {opt.label}
@@ -66,7 +69,7 @@ export default function ProductListScreen({ navigation, route }) {
       </View>
       <View style={styles.resultRow}>
         <Text style={styles.resultCount}>共 {products.length} 件</Text>
-        <TouchableOpacity onPress={() => setViewMode(v => v === 'grid' ? 'list' : 'grid')}>
+        <TouchableOpacity onPress={() => setViewMode((v) => (v === 'grid' ? 'list' : 'grid'))}>
           <Text style={styles.viewModeBtn}>{viewMode === 'grid' ? '≡ 列表' : '⊞ 网格'}</Text>
         </TouchableOpacity>
       </View>
@@ -81,7 +84,7 @@ export default function ProductListScreen({ navigation, route }) {
         </TouchableOpacity>
         <SearchBar
           value={filters.keyword}
-          onChangeText={v => setFilters(prev => ({ ...prev, keyword: v }))}
+          onChangeText={(v) => setFilters((prev) => ({ ...prev, keyword: v }))}
           editable
         />
         <TouchableOpacity style={styles.filterBtn} onPress={() => setFilterVisible(true)}>
@@ -91,7 +94,7 @@ export default function ProductListScreen({ navigation, route }) {
 
       <FlatList
         data={products}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         numColumns={viewMode === 'grid' ? 2 : 1}
         key={viewMode}
         renderItem={renderProduct}
@@ -110,7 +113,7 @@ export default function ProductListScreen({ navigation, route }) {
       <FilterPanel
         visible={filterVisible}
         filters={filters}
-        onApply={f => setFilters(prev => ({ ...prev, ...f }))}
+        onApply={(f) => setFilters((prev) => ({ ...prev, ...f }))}
         onClose={() => setFilterVisible(false)}
       />
     </SafeAreaView>
